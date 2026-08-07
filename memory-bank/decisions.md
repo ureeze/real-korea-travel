@@ -1,0 +1,20 @@
+# Decisions — Real Korea Travel
+
+> ADR 인덱스(요약 캐시). 원본은 Notion ADR(있으면)을 기준으로 하거나, 여기에 기록한다. 결정이 생기면 여기에 추가한다.
+
+## ADR 목록
+
+|#|날짜|결정|상태|근거|
+|---|---|---|---|---|
+|-|-|(아직 기록된 ADR 없음)|-|-|
+
+## 진행 중 결정 사항 (미확정)
+- [ ] **Memory Bank 도입** — 2026-08-08 도입 결정함. 구조는 `project-brief.md` 기준. (ADR 화 필요)
+- [ ] **기술 버전 확정** — Java/Spring Boot/PostgreSQL/Redis 최종 버전. RKT-8에서 진행 예정.
+
+## 잠정 합의 (현재까지)
+- URL 파라미터는 소문자, 응답 `code` 는 대문자 표기.
+- 홈/메타 API(`/home`, `/regions`, `/categories`)는 MVP 에서 제외.
+- 문서 SSOT 는 **OpenAPI 명세** (PRD 는 요약 역할).
+- Jira 워크플로: `진행 중 → 검토 중 → 완료`.
+- 프로젝트: Jira `RKT`, 버전 `0.1.0 MVP`.
