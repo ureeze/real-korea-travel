@@ -14,3 +14,4 @@ Real Korea Travel 백엔드 개발 시작을 위한 가이드. 기술 버전은 
 - 문서: Notion(PRD/ERD/OpenAPI)이 원본, `memory-bank/`는 로컬 요약
 
 상세 작업 단계는 `memory-bank/project-brief.md`와 `AGENTS.md`를 따른다.
+> �ڵ�ȭ ���� �׽�Ʈ (RKT-9): merge �� �Ϸ� �ڵ� ��ȯ Ȯ�ο�.
