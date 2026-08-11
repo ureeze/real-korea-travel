@@ -17,6 +17,7 @@
 - 홈/메타 API(`/home`, `/regions`, `/categories`)는 MVP 에서 제외.
 - 문서 SSOT 는 **OpenAPI 명세** (PRD 는 요약 역할).
 - Jira 워크플로: `진행 중 → 검토 중 → 완료`.
+- **티켓 게이트(2026-08-11)**: `검토 중` 상태의 PR이 머지 전이면 다음 티켓을 제안/착수하지 않는다. 다음 티켓은 직전 PR이 머지되어 Jira가 `완료`가 된 뒤에만 진행한다. (AGENTS.md 반영)
 - 프로젝트: Jira `RKT`, 버전 `0.1.0 MVP`.
 - 기술 스택 확정: Java 25 (LTS) / Spring Boot 4.1.0 / PostgreSQL 18.4 / Redis 8.10.0 (RKT-8, 2026-08-09).
 - Slack 알림은 Jira · GitHub 공식 Slack 앱을 사용한다(직접 메시지 전송 안 함). `#real-korea-travel-dev` 채널 구독.
