@@ -1,7 +1,6 @@
 -- RKT-11 초기 스키마 (ERD v0.1 기준)
 -- 13개 테이블: member, region, category, place, opening_hour, place_image,
 --             menu, local_score, place_feature, ai_review_summary, local_tip, bookmark, review
-
 -- member — 회원
 CREATE TABLE member (
     id                 BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -58,33 +57,23 @@ CREATE TABLE place (
     updated_at       TIMESTAMPTZ  NOT NULL DEFAULT now(),
     deleted_at       TIMESTAMPTZ,
     CONSTRAINT uk_place_google_place_id UNIQUE (google_place_id),
-    CONSTRAINT ck_place_status CHECK (status IN ('DRAFT', 'ACTIVE', 'HIDDEN'))
+    CONSTRAINT ck_place_status CHECK (status IN ('ACTIVE', 'CLOSED', 'HIDDEN'))
 );
 
--- place FTS 인덱스 (search_vector) — PostgreSQL Full Text Search
-ALTER TABLE place
-    ADD COLUMN search_vector tsvector
-    GENERATED ALWAYS AS (
-        setweight(to_tsvector('simple', coalesce(name, '')), 'A') ||
-        setweight(to_tsvector('simple', coalesce(address, '')), 'B')
-    ) STORED;
+-- place 조회 인덱스는 도메인 구현 티켓(RKT-18~20)에서 필요 시 추가
 
-CREATE INDEX idx_place_search ON place USING GIN (search_vector);
-CREATE INDEX idx_place_region_category_status ON place (region_id, category_id, status);
-
--- opening_hour — 운영시간 (요일별)
+-- opening_hour — 운영시간 (요일별, 시간대 분리 시 여러 행 허용)
 CREATE TABLE opening_hour (
-    id            BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    place_id      BIGINT      NOT NULL REFERENCES place (id),
-    day_of_week   SMALLINT    NOT NULL CHECK (day_of_week BETWEEN 1 AND 7),
-    open_time     TIME,
-    close_time    TIME,
-    break_start   TIME,
-    break_end     TIME,
-    is_closed     BOOLEAN     NOT NULL DEFAULT FALSE,
-    created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
-    updated_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
-    CONSTRAINT uk_opening_hour_place_day UNIQUE (place_id, day_of_week)
+    id           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    place_id     BIGINT      NOT NULL REFERENCES place (id),
+    day_of_week  SMALLINT    NOT NULL CHECK (day_of_week BETWEEN 1 AND 7),
+    open_time    TIME        NOT NULL,
+    close_time   TIME        NOT NULL,
+    is_closed    BOOLEAN     NOT NULL DEFAULT FALSE,
+    created_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CONSTRAINT ck_opening_hour_time CHECK (close_time > open_time),
+    CONSTRAINT uk_opening_hour_place_day_time UNIQUE (place_id, day_of_week, open_time, close_time)
 );
 
 -- place_image — 장소 이미지
@@ -111,8 +100,6 @@ CREATE TABLE menu (
     created_at    TIMESTAMPTZ   NOT NULL DEFAULT now(),
     updated_at    TIMESTAMPTZ   NOT NULL DEFAULT now()
 );
-
-CREATE INDEX idx_menu_place_signature ON menu (place_id, is_signature);
 
 -- local_score — 현지인 점수 (Place와 1:1)
 CREATE TABLE local_score (
@@ -177,8 +164,6 @@ CREATE TABLE bookmark (
     created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
     CONSTRAINT uk_bookmark_member_place UNIQUE (member_id, place_id)
 );
-
-CREATE INDEX idx_bookmark_member ON bookmark (member_id);
 
 -- review — 리뷰 소스 (내부 수집용)
 CREATE TABLE review (
