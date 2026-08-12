@@ -12,7 +12,7 @@ erDiagram
     CATEGORY ||--o{ PLACE : "분류"
     PLACE ||--o| LOCAL_SCORE : "1:1"
     PLACE ||--o| PLACE_FEATURE : "1:1"
-    PLACE ||--o{ OPENING_HOUR : "요일별"
+    PLACE ||--o{ OPENING_HOUR : "요일별(시간대 분리 시 다중)"
     PLACE ||--o{ PLACE_IMAGE : "이미지"
     PLACE ||--o{ MENU : "메뉴"
     PLACE ||--o{ AI_REVIEW_SUMMARY : "요약"
@@ -206,21 +206,22 @@ erDiagram
 | price_level | SMALLINT | 1~4 | ₩ ~ ₩₩₩₩ |
 | description | TEXT | | |
 | google_place_id | VARCHAR(255) | UNIQUE | Google Places 연동 키 |
-| status | VARCHAR(20) | DEFAULT 'ACTIVE' | DRAFT / ACTIVE / HIDDEN |
+| status | VARCHAR(20) | DEFAULT 'ACTIVE' | ACTIVE / CLOSED / HIDDEN |
 | created_at / updated_at | TIMESTAMPTZ | | |
 | deleted_at | TIMESTAMPTZ | NULL | soft delete |
 
-### opening_hour — 운영시간 (요일별)
+### opening_hour — 운영시간 (요일별, 시간대 분리 시 여러 행)
 | 컬럼 | 타입 | 제약 | 설명 |
 |---|---|---|---|
 | id | BIGINT | PK | |
 | place_id | BIGINT | FK → place.id, NOT NULL | |
 | day_of_week | SMALLINT | 1=MON ~ 7=SUN | |
-| open_time / close_time | TIME | | is_closed=false 시 필수 |
-| break_start / break_end | TIME | NULL | 브레이크타임 |
+| open_time / close_time | TIME | NOT NULL, close > open | |
 | is_closed | BOOLEAN | DEFAULT false | 휴무일 |
 | created_at / updated_at | TIMESTAMPTZ | | |
-| **UNIQUE** | | (place_id, day_of_week) | |
+| **UNIQUE** | | (place_id, day_of_week, open_time, close_time) | 동일 시간대 중복 방지 |
+
+> 같은 요일에 시간대가 분리되면(예: 오전 9~13, 저녁 17~24) **여러 행으로 저장**한다.
 
 ### place_image — 장소 이미지
 | 컬럼 | 타입 | 제약 | 설명 |
@@ -328,7 +329,7 @@ erDiagram
 |---|---|---|
 | region → place | 1:N | 지역은 여러 장소 포함 |
 | category → place | 1:N | 카테고리는 여러 장소 분류 (MVP) |
-| place → opening_hour | 1:N | 요일별 7행 |
+| place → opening_hour | 1:N | 요일별, 시간대 분리 시 여러 행 |
 | place → place_image | 1:N | |
 | place → menu | 1:N | |
 | place → local_score | 1:1 | |
@@ -342,28 +343,21 @@ erDiagram
 
 ## 4. 인덱스 & 제약
 
+### 현재 (RKT-11 V1에 포함)
+| 대상 | 종류 | 설명 |
+|---|---|---|
+| place | BTREE (google_place_id) | UNIQUE 제약 |
+| ai_review_summary | UNIQUE (place_id, language) | |
+| opening_hour | UNIQUE (place_id, day_of_week, open_time, close_time) | |
+| bookmark | UNIQUE (member_id, place_id) | |
+
+### 나중에 추가 (도메인 구현 티켓 RKT-18~20에서 필요 시)
 | 대상 | 종류 | 설명 |
 |---|---|---|
 | place | BTREE (region_id, category_id, status) | 지역+카테고리 필터 목록 조회 |
 | place | GIN (search_vector) | Full Text Search (PostgreSQL tsvector) |
-| place | BTREE (google_place_id) | UNIQUE 제약 |
 | bookmark | BTREE (member_id) | 즐겨찾기 목록 조회 |
 | menu | BTREE (place_id, is_signature) | 추천 메뉴 조회 |
-| ai_review_summary | UNIQUE (place_id, language) | |
-| opening_hour | UNIQUE (place_id, day_of_week) | |
-| bookmark | UNIQUE (member_id, place_id) | |
-
-### Full Text Search (PostgreSQL 18)
-```sql
-ALTER TABLE place
-    ADD COLUMN search_vector tsvector
-    GENERATED ALWAYS AS (
-        setweight(to_tsvector('simple', coalesce(name, '')), 'A') ||
-        setweight(to_tsvector('simple', coalesce(address, '')), 'B')
-    ) STORED;
-
-CREATE INDEX idx_place_search ON place USING GIN (search_vector);
-```
 
 ## 5. 설계 결정 사항 (Design Decisions)
 
@@ -374,8 +368,9 @@ CREATE INDEX idx_place_search ON place USING GIN (search_vector);
 2. **Region 자기참조 계층 구조**
    - `서울(부모) > 성수(자식)` 구조로 부산, 제주, 전국 확장 시 데이터 변경 없이 지역 추가만으로 대응.
 
-3. **요일별 운영시간 분리**
-   - `opening_hour` 테이블로 정규화. 휴무일(is_closed), 브레이크타임까지 표현.
+3. **요일별 운영시간 분리 (시간대 다중 행)**
+   - `opening_hour` 테이블로 정규화. 휴무일(is_closed), 시간대 분리(오전/오후/저녁)를 행 단위로 표현.
+   - 같은 요일이면 여러 행 저장 가능, `(place_id, day_of_week, open_time, close_time)` 유니크로 중복 방지.
    - PRD의 단일 `openingHours` 필드 대체.
 
 4. **LocalScore / PlaceFeature는 Place와 1:1**
