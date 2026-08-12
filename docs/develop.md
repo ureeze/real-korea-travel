@@ -16,11 +16,10 @@ Real Korea Travel 백엔드 개발 시작을 위한 가이드. 기술 버전은 
 ## 초기 작업 순서 (E1 인프라)
 1. 기술 스택 버전 확정 (RKT-8) ✅
 2. 프로젝트 생성 & 모듈 구조 (RKT-9) ✅
-3. Docker 로컬 개발 환경 (RKT-10) — PostgreSQL 18, Redis 8 컨테이너
+3. Docker 로컬 개발 환경 (RKT-10) — PostgreSQL 18, Redis 8 컨테이너 ✅
 4. DB 스키마 초기화 (RKT-11) — Flyway, `flyway-database-postgresql` 모듈 필수
 
 ## 로컬 개발 환경 (RKT-10)
-
 Docker Desktop 실행 후 프로젝트 루트에서:
 
 ```bash
@@ -34,6 +33,13 @@ docker compose down -v   # 볼륨까지 삭제
 - **Redis 8.10** — `localhost:6379`
 - 데이터는 named volume(`postgres-data`, `redis-data`)에 유지되어 `down` 후에도 보존
 - PostgreSQL 18+ 이미지는 데이터 파일 상위 디렉터리(`/var/lib/postgresql`)에 볼륨을 마운트해야 한다 (전용 하위 디렉터리 사용)
+
+## DB 스키마 (RKT-11, Flyway)
+
+- 마이그레이션 파일: `backend/src/main/resources/db/migration/` (`V1__create_tables.sql`, `V2__seed_base_data.sql`)
+- 앱 기동(`./gradlew bootRun`) 시 Flyway가 자동 적용된다. `ddl-auto: validate`이므로 스키마는 Flyway가 유일하게 관리한다.
+- 스키마 변경 시 기존 파일은 수정하지 않고 새 버전 `V{n}__*.sql`로 추가한다.
+- 검증: `psql -U realkorea -d realkorea -c "SELECT * FROM flyway_schema_history;"`
 
 ## 로컬 저장소
 - 프로젝트 루트: `Real_Korea_Travel/`

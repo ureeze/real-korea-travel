@@ -34,6 +34,7 @@ com.realkoreatravel
 - `member`, `place`, `local_score`, `place_feature`, `bookmark`
 - `region`, `category` 는 place 의 참조(FK).
 - (확장) `place_image`, `menu`, `ai_review_summary`, `local_tip`
+- (RKT-11, 2026-08-11) 초기 스키마 13개 테이블을 Flyway V1/V2로 생성 완료. JPA 엔티티는 도메인 구현 티켓에서 작성.
 
 ## 배포 (계획, E1/E13)
 - Docker → AWS ECS (컨테이너), AWS RDS (PostgreSQL), AWS CloudFront (CDN)
