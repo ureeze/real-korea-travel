@@ -41,6 +41,19 @@ docker compose down -v   # 볼륨까지 삭제
 - 스키마 변경 시 기존 파일은 수정하지 않고 새 버전 `V{n}__*.sql`로 추가한다.
 - 검증: `psql -U realkorea -d realkorea -c "SELECT * FROM flyway_schema_history;"`
 
+## Google OAuth 로그인 (RKT-14)
+
+- **의존성**: `spring-boot-starter-oauth2-client` 추가됨
+- **설정**: `application.yml`에서 `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` 환경변수로 주입
+- **엔드포인트**:
+  - `GET /auth/oauth2/google` — Google 인가 URL로 302 리다이렉트 (진입점)
+  - `GET /auth/oauth2/google/callback` — 승인 코드로 Google 토큰/사용자 정보 교환 → Member 조회/생성 → 사용자 정보 반환
+- **로컬 테스트**:
+  1. [Google Cloud Console](https://console.cloud.google.com)에서 OAuth Client ID 생성
+  2. 승인된 리다이렉트 URI에 `http://localhost:8080/auth/oauth2/google/callback` 등록
+  3. `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` 환경변수 설정 후 `./gradlew bootRun`
+  4. 브라우저에서 `http://localhost:8080/auth/oauth2/google` 접속 → 구글 로그인 → 콜백에서 사용자 정보 JSON 확인
+
 ## 로컬 저장소
 - 프로젝트 루트: `Real_Korea_Travel/`
 - 브랜치: `main` (배포 기준), 작업 브랜치 `feature/{JiraKey}-{summary}`
