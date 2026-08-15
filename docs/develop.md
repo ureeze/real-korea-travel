@@ -71,5 +71,14 @@ docker compose down -v   # 볼륨까지 삭제
 - 브랜치: `main` (배포 기준), 작업 브랜치 `feature/{JiraKey}-{summary}`
 - 문서: Notion(PRD/ERD/OpenAPI)이 원본, `memory-bank/`는 로컬 요약
 
+## Spring Security API 보호 (RKT-17)
+
+- **공개 엔드포인트**: `/auth/oauth2/**`, `/api/v1/auth/**`, `/actuator/health`, `/actuator/info`
+- **보호 엔드포인트**: 공개 목록에 포함되지 않은 모든 요청은 유효한 access token이 필요하다.
+- **인증 헤더**: 보호된 API 호출 시 `Authorization: Bearer {accessToken}` 헤더를 사용한다.
+- **세션 정책**: JWT 기반 Stateless 인증을 사용하므로 서버 세션에 인증 상태를 저장하지 않는다.
+- **인증 실패**: 토큰이 없거나 유효하지 않으면 `401 Unauthorized`를 반환한다.
+- **인가 실패**: 인증은 성공했지만 필요한 권한이 없으면 `403 Forbidden`을 반환한다.
+
 상세 작업 단계는 `memory-bank/project-brief.md`와 `AGENTS.md`를 따른다.
 > Git 브랜치/커밋은 GitHub 연동(Jira 자동화)과 함께 연동 확인됨.
