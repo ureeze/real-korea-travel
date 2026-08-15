@@ -1,7 +1,8 @@
 package com.realkoreatravel.auth.controller;
 
 import com.realkoreatravel.auth.dto.GoogleUserInfo;
-import com.realkoreatravel.auth.dto.OAuthLoginResponse;
+import com.realkoreatravel.auth.dto.TokenResponse;
+import com.realkoreatravel.auth.jwt.JwtTokenProvider;
 import com.realkoreatravel.auth.oauth.GoogleOAuth2Client;
 import com.realkoreatravel.auth.service.OAuth2Service;
 import com.realkoreatravel.common.response.ApiResponse;
@@ -21,10 +22,16 @@ public class AuthController {
 
     private final GoogleOAuth2Client googleOAuth2Client;
     private final OAuth2Service oAuth2Service;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthController(GoogleOAuth2Client googleOAuth2Client, OAuth2Service oAuth2Service) {
+    public AuthController(
+            GoogleOAuth2Client googleOAuth2Client,
+            OAuth2Service oAuth2Service,
+            JwtTokenProvider jwtTokenProvider
+    ) {
         this.googleOAuth2Client = googleOAuth2Client;
         this.oAuth2Service = oAuth2Service;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     /** Google 로그인 화면으로 이동할 인가 URL을 생성해 리다이렉트한다. */
@@ -39,7 +46,7 @@ public class AuthController {
 
     /** Google이 전달한 인가 코드로 사용자를 확인하고 회원을 조회하거나 생성한다. */
     @GetMapping("/google/callback")
-    public ApiResponse<OAuthLoginResponse> callback(
+    public ApiResponse<TokenResponse> callback(
             @RequestParam("code") String code,
             @RequestParam(value = "state", required = false) String state,
             HttpServletRequest request
@@ -48,14 +55,9 @@ public class AuthController {
         // 인가 코드를 Google 사용자 정보로 교환한 뒤 애플리케이션 회원과 연결한다.
         GoogleUserInfo userInfo = googleOAuth2Client.fetchUserInfo(code, redirectUri);
         Member member = oAuth2Service.findOrCreateMember(userInfo);
+        TokenResponse tokens = TokenResponse.from(jwtTokenProvider.issueTokens(member.getId()));
 
-        OAuthLoginResponse response = OAuthLoginResponse.from(
-                member.getId(),
-                member.getEmail(),
-                member.getNickname(),
-                member.getProfileImageUrl()
-        );
-        return ApiResponse.success(LOGIN_SUCCESS_MESSAGE, response);
+        return ApiResponse.success(LOGIN_SUCCESS_MESSAGE, tokens);
     }
 
     /** OAuth 제공자에 등록한 콜백 주소와 동일한 URI를 현재 요청 기준으로 구성한다. */

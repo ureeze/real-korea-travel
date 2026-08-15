@@ -47,12 +47,23 @@ docker compose down -v   # 볼륨까지 삭제
 - **설정**: `application.yml`에서 `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` 환경변수로 주입
 - **엔드포인트**:
   - `GET /auth/oauth2/google` — Google 인가 URL로 302 리다이렉트 (진입점)
-  - `GET /auth/oauth2/google/callback` — 승인 코드로 Google 토큰/사용자 정보 교환 → Member 조회/생성 → 사용자 정보 반환
+  - `GET /auth/oauth2/google/callback` — 승인 코드로 Google 토큰/사용자 정보 교환 → Member 조회/생성 → JWT 발급
 - **로컬 테스트**:
   1. [Google Cloud Console](https://console.cloud.google.com)에서 OAuth Client ID 생성
   2. 승인된 리다이렉트 URI에 `http://localhost:8080/auth/oauth2/google/callback` 등록
   3. `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` 환경변수 설정 후 `./gradlew bootRun`
-  4. 브라우저에서 `http://localhost:8080/auth/oauth2/google` 접속 → 구글 로그인 → 콜백에서 사용자 정보 JSON 확인
+  4. 브라우저에서 `http://localhost:8080/auth/oauth2/google` 접속 → 구글 로그인 → 콜백에서 JWT 응답 확인
+
+## JWT 인증 (RKT-15)
+
+- **설정**: `JWT_SECRET` 환경변수는 32자 이상으로 설정한다.
+- **만료 시간**:
+  - access token: 기본 900초 (`JWT_ACCESS_EXPIRATION_SECONDS`)
+  - refresh token: 기본 1,209,600초 (`JWT_REFRESH_EXPIRATION_SECONDS`)
+- **로그인 성공 응답**: Google OAuth callback에서 access token과 refresh token을 발급한다.
+- **토큰 갱신**: `POST /api/v1/auth/refresh`에 `{"refreshToken":"..."}`를 전달한다.
+- **인증 요청**: 보호된 API 호출 시 `Authorization: Bearer {accessToken}` 헤더를 사용한다.
+- **주의**: JWT secret은 소스 코드나 로그에 기록하지 않는다.
 
 ## 로컬 저장소
 - 프로젝트 루트: `Real_Korea_Travel/`

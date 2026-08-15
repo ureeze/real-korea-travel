@@ -24,3 +24,9 @@ spring:
             scope:
               - email
               - profile
+
+security:
+  jwt:
+    secret: test-secret-that-is-at-least-32-characters-long
+    access-token-expiration-seconds: 900
+    refresh-token-expiration-seconds: 1209600
