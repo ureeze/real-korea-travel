@@ -30,6 +30,10 @@ com.realkoreatravel
 ```
 각 패키지는: `controller / service / repository / domain(엔티티) / dto`
 
+인증 요청은 `auth.jwt.JwtAuthenticationFilter`가 Bearer access token을 검증하고,
+검증된 회원 ID를 Spring Security 인증 객체에 등록한다. Refresh token은
+`POST /api/v1/auth/refresh`에서 검증한 뒤 새 access/refresh token 쌍으로 교체한다.
+
 ## 데이터 모델 요약 (ERD 기준)
 - `member`, `place`, `local_score`, `place_feature`, `bookmark`
 - `region`, `category` 는 place 의 참조(FK).
