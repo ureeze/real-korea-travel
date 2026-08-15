@@ -12,6 +12,7 @@
 - [ ] **Memory Bank 도입** — 2026-08-08 도입 결정함. 구조는 `project-brief.md` 기준. (ADR 화 필요)
 - [x] **기술 버전 확정** — Java 25 (LTS) / Spring Boot 4.1.0 / PostgreSQL 18.4 / Redis 8.10.0. RKT-8에서 확정 (2026-08-09).
 - [x] **JWT 인증 토큰** — RKT-15에서 access token과 refresh token을 HMAC 서명 JWT로 발급한다. access token은 Bearer 인증에 사용하고, refresh token은 `/api/v1/auth/refresh`에서 새 토큰 쌍으로 교체한다. secret과 만료 시간은 환경변수로 주입한다 (2026-08-15).
+- [x] **토큰 갱신 API** — RKT-16에서 refresh token의 서명·만료·타입을 검증하고, 유효하지 않은 토큰은 `401 INVALID_REFRESH_TOKEN`으로 응답한다. 정상 요청은 새 access/refresh token 쌍을 반환한다 (2026-08-15).
 
 ## 잠정 합의 (현재까지)
 - URL 파라미터는 소문자, 응답 `code` 는 대문자 표기.

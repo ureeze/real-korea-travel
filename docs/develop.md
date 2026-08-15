@@ -62,6 +62,7 @@ docker compose down -v   # 볼륨까지 삭제
   - refresh token: 기본 1,209,600초 (`JWT_REFRESH_EXPIRATION_SECONDS`)
 - **로그인 성공 응답**: Google OAuth callback에서 access token과 refresh token을 발급한다.
 - **토큰 갱신**: `POST /api/v1/auth/refresh`에 `{"refreshToken":"..."}`를 전달한다.
+- **갱신 실패**: refresh token이 누락되거나 유효하지 않으면 `400` 또는 `401`을 반환한다.
 - **인증 요청**: 보호된 API 호출 시 `Authorization: Bearer {accessToken}` 헤더를 사용한다.
 - **주의**: JWT secret은 소스 코드나 로그에 기록하지 않는다.
 
