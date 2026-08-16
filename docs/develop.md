@@ -80,5 +80,13 @@ docker compose down -v   # 볼륨까지 삭제
 - **인증 실패**: 토큰이 없거나 유효하지 않으면 `401 Unauthorized`를 반환한다.
 - **인가 실패**: 인증은 성공했지만 필요한 권한이 없으면 `403 Forbidden`을 반환한다.
 
+## 장소 목록 API (RKT-18)
+
+- **엔드포인트**: `GET /api/v1/places`
+- **필터**: `region`, `category` 코드는 소문자로 전달한다. 예: `?region=seongsu&category=cafe`
+- **페이징**: `page`는 0부터 시작하고 `size` 기본값은 20, 최대값은 100이다.
+- **정렬**: `sort`는 `name`, `createdAt`, `updatedAt` 필드와 `asc`·`desc` 방향을 지원한다.
+- **조회 대상**: `ACTIVE` 상태이고 soft delete되지 않은 장소만 반환한다.
+
 상세 작업 단계는 `memory-bank/project-brief.md`와 `AGENTS.md`를 따른다.
 > Git 브랜치/커밋은 GitHub 연동(Jira 자동화)과 함께 연동 확인됨.
