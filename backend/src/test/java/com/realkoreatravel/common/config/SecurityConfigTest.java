@@ -1,41 +1,30 @@
 package com.realkoreatravel.common.config;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.realkoreatravel.auth.controller.AuthTokenController;
 import com.realkoreatravel.auth.jwt.JwtTokenProvider;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 /** 공개 API와 JWT 인증이 필요한 API의 Security Filter Chain 동작을 확인하는 테스트다. */
 @ActiveProfiles("test")
-@SpringBootTest
+@WebMvcTest(controllers = AuthTokenController.class)
+@Import({SecurityConfig.class, JwtTokenProvider.class})
 class SecurityConfigTest {
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
     private MockMvc mockMvc;
-
-    @BeforeEach
-    void setUp() {
-        // 실제 애플리케이션의 Security Filter Chain을 MockMvc에 연결한다.
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(springSecurity())
-                .build();
-    }
 
     @Test
     void authRefreshEndpointIsPublic() throws Exception {
