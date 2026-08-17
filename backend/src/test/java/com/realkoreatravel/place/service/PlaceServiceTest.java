@@ -1,0 +1,90 @@
+package com.realkoreatravel.place.service;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import com.realkoreatravel.place.domain.Category;
+import com.realkoreatravel.place.domain.Place;
+import com.realkoreatravel.place.domain.PlaceStatus;
+import com.realkoreatravel.place.domain.Region;
+import com.realkoreatravel.place.dto.PlaceListResponse;
+import com.realkoreatravel.place.dto.PlaceSearchCondition;
+import com.realkoreatravel.place.repository.PlaceRepository;
+import java.math.BigDecimal;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+
+/** 장소 목록 조회의 필터 변환, 페이징 생성, 응답 DTO 변환을 검증하는 단위 테스트다. */
+@ExtendWith(MockitoExtension.class)
+class PlaceServiceTest {
+
+    @Mock
+    private PlaceRepository placeRepository;
+
+    @InjectMocks
+    private PlaceService placeService;
+
+    @Test
+    @DisplayName("필터와 페이징 조건에 따라 장소 목록 응답을 반환한다")
+    void findPlacesReturnsPagedPlaceSummaries() {
+        // 지역·카테고리 필터와 정렬 조건을 가진 장소 1건을 조회 결과로 준비한다.
+        Region region = Region.builder()
+                .name("성수")
+                .code("seongsu")
+                .displayOrder(1)
+                .build();
+        Category category = Category.builder()
+                .name("카페")
+                .code("cafe")
+                .displayOrder(1)
+                .build();
+        Place place = Place.builder()
+                .region(region)
+                .category(category)
+                .name("테스트 카페")
+                .address("서울시 성동구")
+                .latitude(new BigDecimal("37.5440"))
+                .longitude(new BigDecimal("127.0557"))
+                .priceLevel((short) 2)
+                .description("테스트 장소")
+                .build();
+        when(placeRepository.findActivePlaces(eq("seongsu"), eq("cafe"), eq(PlaceStatus.ACTIVE), any()))
+                .thenReturn(new PageImpl<>(List.of(place)));
+
+        PlaceListResponse response = placeService.findPlaces(
+                new PlaceSearchCondition("seongsu", "cafe", 1, 10, "name,asc")
+        );
+
+        // 조회 결과가 장소 요약 응답으로 변환되고 전체 건수가 유지되는지 검증한다.
+        assertThat(response.places()).hasSize(1);
+        assertThat(response.places().getFirst().name()).isEqualTo("테스트 카페");
+        assertThat(response.places().getFirst().region()).isEqualTo("seongsu");
+        assertThat(response.places().getFirst().category()).isEqualTo("cafe");
+        assertThat(response.totalElements()).isEqualTo(1);
+
+        // Service가 활성 장소 조회를 위해 Repository를 호출했는지만 검증한다.
+        verify(placeRepository).findActivePlaces(eq("seongsu"), eq("cafe"), eq(PlaceStatus.ACTIVE), any());
+    }
+
+    @Test
+    @DisplayName("빈 필터와 잘못된 페이징·정렬 값에 기본값을 적용한다")
+    void blankFiltersUseDefaultPagingAndSort() {
+        // 공백 필터와 범위를 벗어난 페이징·정렬 조건을 입력한 상황을 준비한다.
+        when(placeRepository.findActivePlaces(eq(null), eq(null), eq(PlaceStatus.ACTIVE), any()))
+                .thenReturn(new PageImpl<>(List.of()));
+
+        placeService.findPlaces(new PlaceSearchCondition(" ", "", -1, 0, "unknown,sideways"));
+
+        // 빈 필터가 전체 활성 장소 조회로 전달되는지만 검증한다.
+        verify(placeRepository).findActivePlaces(eq(null), eq(null), eq(PlaceStatus.ACTIVE), any());
+    }
+}
