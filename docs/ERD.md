@@ -118,7 +118,7 @@ erDiagram
         boolean solo_friendly
         boolean reservation_required
         boolean parking_available
-        smallint avg_wait_time_min
+        integer avg_wait_time_min
         timestamp created_at
         timestamp updated_at
     }
@@ -272,7 +272,7 @@ erDiagram
 | solo_friendly | BOOLEAN | DEFAULT false | 혼밥 가능 |
 | reservation_required | BOOLEAN | DEFAULT false | 예약 필요 |
 | parking_available | BOOLEAN | DEFAULT false | 주차 |
-| avg_wait_time_min | SMALLINT | DEFAULT 0 | 평균 웨이팅(분) |
+| avg_wait_time_min | INTEGER | DEFAULT 0 | 평균 웨이팅(분) |
 | created_at / updated_at | TIMESTAMPTZ | | |
 
 ### ai_review_summary — AI 리뷰 요약

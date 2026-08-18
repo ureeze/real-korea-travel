@@ -2,16 +2,19 @@ package com.realkoreatravel.place.service;
 
 import com.realkoreatravel.place.domain.Place;
 import com.realkoreatravel.place.domain.PlaceStatus;
+import com.realkoreatravel.place.dto.PlaceDetailResponse;
 import com.realkoreatravel.place.dto.PlaceListResponse;
 import com.realkoreatravel.place.dto.PlaceSearchCondition;
 import com.realkoreatravel.place.repository.PlaceRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import lombok.RequiredArgsConstructor;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Transactional(readOnly = true)
@@ -33,6 +36,16 @@ public class PlaceService {
                 pageable
         );
         return PlaceListResponse.from(places);
+    }
+
+    /** 활성·미삭제 장소를 ID로 조회하고 상세 화면용 응답으로 변환한다. */
+    public PlaceDetailResponse findPlace(Long placeId) {
+        Place place = placeRepository.findActivePlaceDetail(placeId, PlaceStatus.ACTIVE)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "장소를 찾을 수 없습니다."
+                ));
+        return PlaceDetailResponse.from(place);
     }
 
     /** 요청의 페이징·정렬 파라미터를 안전한 Spring Pageable로 변환한다. */

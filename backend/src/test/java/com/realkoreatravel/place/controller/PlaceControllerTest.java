@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.realkoreatravel.common.response.ApiResponse;
+import com.realkoreatravel.place.dto.PlaceDetailResponse;
 import com.realkoreatravel.place.dto.PlaceListResponse;
 import com.realkoreatravel.place.dto.PlaceSearchCondition;
 import com.realkoreatravel.place.service.PlaceService;
@@ -54,5 +55,26 @@ class PlaceControllerTest {
         assertThat(response.data()).isEqualTo(data);
         // Controller가 PlaceSearchCondition을 사용해 Service를 호출했는지만 검증한다.
         verify(placeService).findPlaces(any(PlaceSearchCondition.class));
+    }
+
+    @Test
+    @DisplayName("장소 ID로 상세 조회를 요청해 Service 응답을 반환한다")
+    void getPlaceReturnsDetailResponse() {
+        // Service가 반환할 장소 상세 응답을 준비한다.
+        PlaceDetailResponse data = PlaceDetailResponse.builder()
+                .id(42L)
+                .name("테스트 카페")
+                .address("서울시 성동구")
+                .region("seongsu")
+                .category("cafe")
+                .build();
+        when(placeService.findPlace(42L)).thenReturn(data);
+
+        ApiResponse<PlaceDetailResponse> response = placeController.getPlace(42L);
+
+        // Controller가 장소 ID를 Service에 전달하고 응답을 감싸 반환하는지 검증한다.
+        assertThat(response.code()).isEqualTo("SUCCESS");
+        assertThat(response.data()).isEqualTo(data);
+        verify(placeService).findPlace(42L);
     }
 }

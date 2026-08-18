@@ -88,5 +88,14 @@ docker compose down -v   # 볼륨까지 삭제
 - **정렬**: `sort`는 `name`, `createdAt`, `updatedAt` 필드와 `asc`·`desc` 방향을 지원한다.
 - **조회 대상**: `ACTIVE` 상태이고 soft delete되지 않은 장소만 반환한다.
 
+## 장소 상세 조회 API (RKT-19)
+
+- **엔드포인트**: `GET /api/v1/places/{placeId}`
+- **조회 대상**: `ACTIVE` 상태이고 soft delete되지 않은 장소만 반환한다.
+- **응답 범위**: 장소 기본 정보, 지역·카테고리, 외국인 편의정보(`PlaceFeature`), 메뉴 목록을 포함한다.
+- **메뉴 정렬**: `sort_order` 오름차순을 기본으로 하며, 같은 순서에서는 메뉴 ID 오름차순으로 정렬한다.
+- **예외**: 장소가 존재하지 않거나 비활성·삭제 상태이면 `404 Not Found`를 반환한다.
+- **Local Score**: 별도 Local Score 모델 작업에서 상세 응답 연계를 확장한다.
+
 상세 작업 단계는 `memory-bank/project-brief.md`와 `AGENTS.md`를 따른다.
 > Git 브랜치/커밋은 GitHub 연동(Jira 자동화)과 함께 연동 확인됨.

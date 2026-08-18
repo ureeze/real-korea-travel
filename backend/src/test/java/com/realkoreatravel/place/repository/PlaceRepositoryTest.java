@@ -3,7 +3,9 @@ package com.realkoreatravel.place.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.realkoreatravel.place.domain.Category;
+import com.realkoreatravel.place.domain.Menu;
 import com.realkoreatravel.place.domain.Place;
+import com.realkoreatravel.place.domain.PlaceFeature;
 import com.realkoreatravel.place.domain.PlaceStatus;
 import com.realkoreatravel.place.domain.Region;
 import org.junit.jupiter.api.DisplayName;
@@ -29,6 +31,12 @@ class PlaceRepositoryTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private PlaceFeatureRepository placeFeatureRepository;
+
+    @Autowired
+    private MenuRepository menuRepository;
 
     @Test
     @DisplayName("지역과 카테고리 조건에 맞는 활성 장소를 조회한다")
@@ -110,5 +118,52 @@ class PlaceRepositoryTest {
         // Repository가 ACTIVE 상태이고 삭제되지 않은 장소만 반환하는지 검증한다.
         assertThat(result.getContent()).extracting(Place::getName)
                 .containsExactly("활성 장소");
+    }
+
+    @Test
+    @DisplayName("활성 장소와 편의정보·메뉴를 함께 조회한다")
+    void findActivePlaceDetailFetchesRelatedData() {
+        // 장소와 상세 화면에 필요한 편의정보·메뉴를 저장한다.
+        Region region = regionRepository.save(Region.builder()
+                .name("상세 지역")
+                .code("detail-region")
+                .displayOrder(97)
+                .build());
+        Category category = categoryRepository.save(Category.builder()
+                .name("상세 카테고리")
+                .code("detail-category")
+                .displayOrder(97)
+                .build());
+        Place place = placeRepository.saveAndFlush(Place.builder()
+                .region(region)
+                .category(category)
+                .name("상세 장소")
+                .address("상세 주소")
+                .build());
+        placeFeatureRepository.save(PlaceFeature.builder()
+                .place(place)
+                .englishMenu(true)
+                .cardAvailable(true)
+                .soloFriendly(true)
+                .reservationRequired(false)
+                .parkingAvailable(false)
+                .avgWaitTimeMin(15)
+                .build());
+        menuRepository.save(Menu.builder()
+                .place(place)
+                .name("추천 메뉴")
+                .nameEn("Recommended Menu")
+                .price(java.math.BigDecimal.valueOf(7000))
+                .signature(true)
+                .sortOrder(1)
+                .build());
+
+        Place result = placeRepository.findActivePlaceDetail(place.getId(), PlaceStatus.ACTIVE)
+                .orElseThrow();
+
+        // 상세 조회 결과에서 편의정보와 메뉴가 함께 초기화되는지 검증한다.
+        assertThat(result.getFeature().isEnglishMenu()).isTrue();
+        assertThat(result.getMenus()).extracting(Menu::getName)
+                .containsExactly("추천 메뉴");
     }
 }
