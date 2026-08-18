@@ -1,11 +1,13 @@
 package com.realkoreatravel.place.controller;
 
 import com.realkoreatravel.common.response.ApiResponse;
+import com.realkoreatravel.place.dto.PlaceDetailResponse;
 import com.realkoreatravel.place.dto.PlaceListResponse;
 import com.realkoreatravel.place.dto.PlaceSearchCondition;
 import com.realkoreatravel.place.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +30,11 @@ public class PlaceController {
     ) {
         PlaceSearchCondition condition = new PlaceSearchCondition(region, category, page, size, sort);
         return ApiResponse.success(placeService.findPlaces(condition));
+    }
+
+    /** 장소 ID로 활성 장소의 기본 정보와 상세 연관 정보를 조회한다. */
+    @GetMapping("/{placeId}")
+    public ApiResponse<PlaceDetailResponse> getPlace(@PathVariable Long placeId) {
+        return ApiResponse.success(placeService.findPlace(placeId));
     }
 }

@@ -71,8 +71,5 @@ jobs:
       - name: Run test with Gradle
         run: ./gradlew test
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/realkorea
-          SPRING_DATASOURCE_USERNAME: realkorea
-          SPRING_DATASOURCE_PASSWORD: realkorea1234
           SPRING_DATA_REDIS_HOST: localhost
           SPRING_DATA_REDIS_PORT: 6379

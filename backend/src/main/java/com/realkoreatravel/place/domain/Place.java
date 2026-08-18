@@ -10,9 +10,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -88,6 +93,15 @@ public class Place {
     /** soft delete 처리된 시각; null이면 삭제되지 않은 상태 */
     private Instant deletedAt;
 
+    /** 장소별 외국인 편의정보. */
+    @OneToOne(mappedBy = "place", fetch = FetchType.LAZY)
+    private PlaceFeature feature;
+
+    /** 장소에 등록된 메뉴 목록이며 표시 순서 기준으로 정렬된다. */
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @OrderBy("sortOrder ASC, id ASC")
+    private List<Menu> menus = new ArrayList<>();
+
     @Builder
     public Place(
             Region region,
@@ -125,5 +139,15 @@ public class Place {
         Instant now = Instant.now();
         this.deletedAt = now;
         this.updatedAt = now;
+    }
+
+    /** PlaceFeature 생성 시 양방향 연관관계의 반대편을 연결한다. */
+    void assignFeature(PlaceFeature feature) {
+        this.feature = feature;
+    }
+
+    /** Menu 생성 시 장소의 메뉴 컬렉션에 새 메뉴를 추가한다. */
+    void addMenu(Menu menu) {
+        this.menus.add(menu);
     }
 }

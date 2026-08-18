@@ -15,6 +15,8 @@
 - [x] **토큰 갱신 API** — RKT-16에서 refresh token의 서명·만료·타입을 검증하고, 유효하지 않은 토큰은 `401 INVALID_REFRESH_TOKEN`으로 응답한다. 정상 요청은 새 access/refresh token 쌍을 반환한다 (2026-08-15).
 - [x] **Spring Security API 보호** — RKT-17에서 JWT 기반 Stateless 세션을 사용하고, 인증 필요 API는 access token을 검증한다. 공개 엔드포인트는 별도로 허용하며 인증 실패는 `401`, 인가 실패는 `403`으로 응답한다 (2026-08-16).
 - [x] **장소 목록 API 조회 정책** — RKT-18에서 `region`·`category` 소문자 코드로 장소를 필터링하고, `page`·`size`·`sort`로 페이징과 정렬을 지원한다. `ACTIVE` 상태이며 삭제되지 않은 장소만 반환한다 (2026-08-16).
+- [x] **장소 상세 조회 정책** — RKT-19에서 `ACTIVE` 상태이며 삭제되지 않은 장소만 ID로 조회하고, 장소 기본 정보와 `PlaceFeature`·메뉴 목록을 함께 반환한다. 메뉴는 `sort_order`와 ID 오름차순으로 정렬하며 Local Score는 별도 모델 작업에서 연계한다 (2026-08-18).
+- [x] **일반 수치 타입 정책** — 특별한 저장 공간 최적화 이유가 없는 단순 수치 필드는 Java `Short`와 PostgreSQL `SMALLINT` 대신 `Integer`와 `INTEGER`를 우선 사용한다. RKT-19에서 `PlaceFeature.avgWaitTimeMin`에 적용했다 (2026-08-18).
 
 ## 잠정 합의 (현재까지)
 - URL 파라미터는 소문자, 응답 `code` 는 대문자 표기.

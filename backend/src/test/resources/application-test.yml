@@ -1,15 +1,15 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/realkorea
-    username: realkorea
-    password: realkorea1234
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:mem:realkorea;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     open-in-view: false
   flyway:
-    enabled: true
+    enabled: false
   data:
     redis:
       host: localhost
