@@ -7,14 +7,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.realkoreatravel.place.domain.Category;
+import com.realkoreatravel.place.domain.Menu;
 import com.realkoreatravel.place.domain.Place;
+import com.realkoreatravel.place.domain.PlaceFeature;
 import com.realkoreatravel.place.domain.PlaceStatus;
 import com.realkoreatravel.place.domain.Region;
 import com.realkoreatravel.place.dto.PlaceListResponse;
+import com.realkoreatravel.place.dto.PlaceDetailResponse;
 import com.realkoreatravel.place.dto.PlaceSearchCondition;
 import com.realkoreatravel.place.repository.PlaceRepository;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -86,5 +90,48 @@ class PlaceServiceTest {
 
         // 빈 필터가 전체 활성 장소 조회로 전달되는지만 검증한다.
         verify(placeRepository).findActivePlaces(eq(null), eq(null), eq(PlaceStatus.ACTIVE), any());
+    }
+
+    @Test
+    @DisplayName("장소 상세 정보와 편의정보·추천 메뉴를 응답한다")
+    void findPlaceReturnsDetailResponse() {
+        // 상세 응답에 포함할 장소와 연관 데이터를 준비한다.
+        Region region = Region.builder().name("성수").code("seongsu").displayOrder(1).build();
+        Category category = Category.builder().name("카페").code("cafe").displayOrder(1).build();
+        Place place = Place.builder()
+                .region(region)
+                .category(category)
+                .name("테스트 카페")
+                .address("서울시 성동구")
+                .priceLevel((short) 2)
+                .build();
+        PlaceFeature feature = PlaceFeature.builder()
+                .place(place)
+                .englishMenu(true)
+                .cardAvailable(true)
+                .soloFriendly(true)
+                .reservationRequired(false)
+                .parkingAvailable(false)
+                .avgWaitTimeMin(10)
+                .build();
+        Menu menu = Menu.builder()
+                .place(place)
+                .name("시그니처 라떼")
+                .nameEn("Signature Latte")
+                .price(new BigDecimal("6500"))
+                .signature(true)
+                .sortOrder(1)
+                .build();
+        when(placeRepository.findActivePlaceDetail(eq(42L), eq(PlaceStatus.ACTIVE)))
+                .thenReturn(Optional.of(place));
+
+        PlaceDetailResponse response = placeService.findPlace(42L);
+
+        // 장소 기본 정보와 연관 정보가 상세 응답으로 변환되는지 검증한다.
+        assertThat(response.name()).isEqualTo("테스트 카페");
+        assertThat(response.feature().englishMenu()).isTrue();
+        assertThat(response.recommendedMenus()).extracting(PlaceDetailResponse.MenuResponse::name)
+                .containsExactly("시그니처 라떼");
+        verify(placeRepository).findActivePlaceDetail(42L, PlaceStatus.ACTIVE);
     }
 }
