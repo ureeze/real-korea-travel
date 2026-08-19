@@ -150,6 +150,15 @@ Jira 작업 시작
 - Notion은 팀 공유용 요약, `memory-bank/decisions.md`는 ADR 인덱스로 유지한다.
 - 기존 결정을 변경할 때는 기존 ADR을 삭제하지 않고 `Superseded`로 표시한 뒤 새 ADR을 추가한다.
 
+## 문서 정합성 규칙
+
+- 작업 시작 전 관련 공식 문서를 확인한다: PRD는 제품 요구사항, Notion ERD는 DB 설계, Notion OpenAPI는 API 계약의 기준이다.
+- `docs/ERD.md`는 Notion ERD의 상세 복사본이 아니라 AI Agent·코드 리뷰용 축약 Context로 유지한다. 상세 컬럼을 중복 작성하지 않는다.
+- `memory-bank/`는 공식 설계 문서가 아닌 AI Agent용 Context/Cache다. 프로젝트 개요·구조·결정 요약만 유지하고 상세 설계는 공식 문서로 연결한다.
+- DB 변경 시 Entity·Flyway Migration·Notion ERD·`docs/ERD.md`의 핵심 관계를 대조한다.
+- API 변경 시 Controller·DTO·테스트·Notion OpenAPI를 대조하고, 설계 결정이나 예외적인 선택은 ADR 또는 `memory-bank/decisions.md`에 기록한다.
+- 작업 완료 전 코드·테스트·최근 결정 내역을 기준으로 문서 불일치를 점검하고, 공식 문서와 로컬 요약을 함께 갱신한다.
+
 ## 배포 규칙
 
 - 현재 프로젝트는 초기 로컬 개발 기준이다.

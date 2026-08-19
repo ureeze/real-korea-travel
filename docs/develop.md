@@ -69,7 +69,8 @@ docker compose down -v   # 볼륨까지 삭제
 ## 로컬 저장소
 - 프로젝트 루트: `Real_Korea_Travel/`
 - 브랜치: `main` (배포 기준), 작업 브랜치 `feature/{JiraKey}-{summary}`
-- 문서: Notion(PRD/ERD/OpenAPI)이 원본, `memory-bank/`는 로컬 요약
+- 문서 역할: Notion(PRD/ERD/OpenAPI)이 공식 기준, `docs/ERD.md`는 AI Agent·코드 리뷰용 ERD 요약, `memory-bank/`는 로컬 Context/Cache
+- ERD 상세 설계는 [Notion ERD](https://app.notion.com/p/ERD-3b38a222ce3c804da4e6d8165ad1fbfb)를 확인하고, 실제 적용 DB는 `backend/src/main/resources/db/migration/`을 확인한다.
 
 ## Spring Security API 보호 (RKT-17)
 
