@@ -44,10 +44,9 @@
 |사용자 만족도|4.5 / 5 이상|
 
 ## MVP API 범위 (OpenAPI SSOT)
-- 인증: `POST /api/v1/auth/google`, `POST /api/v1/auth/refresh`
-- 헬스: `GET /health`
-- 장소: `GET /api/v1/places`, `GET /api/v1/places/{placeId}`, `GET /api/v1/search`
-- 즐겨찾기: `POST/DELETE/GET /api/v1/bookmarks`
+- 현재 구현 인증: `GET /auth/oauth2/google`, `GET /auth/oauth2/google/callback`, `POST /api/v1/auth/refresh`
+- 현재 구현 장소: `GET /api/v1/places`, `GET /api/v1/places/{placeId}`
+- 후속 구현 범위: 키워드 검색, 즐겨찾기, Local Score, AI 리뷰 요약
 
 ## 관계
 - 프로젝트 루트: `C:\Users\alche\OneDrive\문서\Default Project\Real_Korea_Travel`

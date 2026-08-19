@@ -23,7 +23,7 @@ class AuthTokenControllerTest {
         // 웹 계층 전체를 띄우지 않고 Controller와 JWT 제공자만 직접 연결한다.
         jwtTokenProvider = new JwtTokenProvider(
                 "test-secret-that-is-at-least-32-characters-long",
-                900,
+                3600,
                 1209600
         );
         authTokenController = new AuthTokenController(jwtTokenProvider);

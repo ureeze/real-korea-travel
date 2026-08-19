@@ -71,8 +71,6 @@ erDiagram
         smallint day_of_week
         time open_time
         time close_time
-        time break_start
-        time break_end
         boolean is_closed
         timestamp created_at
         timestamp updated_at
