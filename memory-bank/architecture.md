@@ -37,11 +37,12 @@ com.realkoreatravel
 현재 Google OAuth 진입점은 `GET /auth/oauth2/google`이며, Google callback
 `GET /auth/oauth2/google/callback`에서 회원 조회·생성 후 JWT를 발급한다. Access token 기본 만료시간은 3600초(1시간)다.
 
-## 데이터 모델 요약 (ERD 기준)
+## 데이터 모델 요약 (Notion ERD 기준)
 - `member`, `place`, `region`, `category`, `place_feature`, `menu`
 - `region`, `category` 는 place 의 참조(FK)이며, `place_feature`는 1:1, `menu`는 1:N 관계다.
 - (DB 설계/후속 구현) `local_score`, `bookmark`, `opening_hour`, `place_image`, `ai_review_summary`, `local_tip`, `review`
 - (RKT-11, 2026-08-11) 초기 스키마 13개 테이블을 Flyway V1/V2로 생성 완료. JPA 엔티티는 도메인 구현 티켓에서 작성.
+- 상세 컬럼은 Notion ERD, 실제 적용 여부는 `backend/src/main/resources/db/migration/`, AI Agent용 관계 요약은 `docs/ERD.md`를 확인한다.
 
 ## 배포 (계획, E1/E13)
 - Docker → AWS ECS (컨테이너), AWS RDS (PostgreSQL), AWS CloudFront (CDN)

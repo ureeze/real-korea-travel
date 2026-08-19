@@ -1,6 +1,6 @@
 # Decisions — Real Korea Travel
 
-> ADR 인덱스(요약 캐시). 원본은 Notion ADR(있으면)을 기준으로 하거나, 여기에 기록한다. 결정이 생기면 여기에 추가한다.
+> ADR 인덱스(요약 캐시). 정식 ADR 원문은 `docs/adr/`에서 관리하고, 이 문서에는 목록과 핵심 요약만 기록한다.
 
 ## ADR 목록
 
@@ -23,6 +23,7 @@
 - URL 파라미터는 소문자, 응답 `code` 는 대문자 표기.
 - 홈/메타 API(`/home`, `/regions`, `/categories`)는 MVP 에서 제외.
 - 문서 SSOT 는 **OpenAPI 명세** (PRD 는 요약 역할).
+- 문서 역할: Notion PRD·ERD·OpenAPI는 공식 문서, `docs/ERD.md`는 AI Agent용 축약 Context, `memory-bank/`는 로컬 Cache다. 실제 DB 적용 구조는 Flyway Migration을 기준으로 한다.
 - Jira 워크플로: `진행 중 → 검토 중 → 완료`.
 - **티켓 게이트(2026-08-11)**: `검토 중` 상태의 PR이 머지 전이면 다음 티켓을 제안/착수하지 않는다. 다음 티켓은 직전 PR이 머지되어 Jira가 `완료`가 된 뒤에만 진행한다. (AGENTS.md 반영)
 - **배포 후순위 (2026-08-13)**: RKT-13 (AWS 배포, ECS/RDS/CloudFront)은 MVP 기능 개발 완료 후 진행. priority를 High → Low로 조정했고, RKT-14 (Google OAuth)부터 도메인 기능 티켓을 우선 진행한다.

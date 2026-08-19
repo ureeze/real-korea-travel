@@ -12,8 +12,9 @@
 | `coding-rules.md` | 코딩 표기 규칙, 용어, 컨벤션 |
 | `decisions.md` | ADR 집약 (결정 사항 인덱스) |
 
-- Notion 문서가 원본(Source of Truth). Memory Bank는 작업 편의를 위한 로컬 요약 캐시다.
-- Notion과 충돌하면 Notion을 우선하고, 작업 종료 후 Memory Bank를 갱신한다.
+- Notion PRD·ERD·OpenAPI가 공식 문서다. Memory Bank는 AI Agent가 작업을 빠르게 이해하기 위한 로컬 Context/Cache다.
+- DB 설계는 Notion ERD, 실제 적용 스키마는 Flyway Migration, API 계약은 Notion OpenAPI를 기준으로 한다.
+- 로컬 요약과 공식 문서가 충돌하면 코드·테스트·Migration·최근 결정 내역을 함께 확인하고, 작업 종료 시 요약을 갱신한다.
 
 ---
 
