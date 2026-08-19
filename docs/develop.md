@@ -58,7 +58,7 @@ docker compose down -v   # 볼륨까지 삭제
 
 - **설정**: `JWT_SECRET` 환경변수는 32자 이상으로 설정한다.
 - **만료 시간**:
-  - access token: 기본 900초 (`JWT_ACCESS_EXPIRATION_SECONDS`)
+  - access token: 기본 3600초(1시간) (`JWT_ACCESS_EXPIRATION_SECONDS`)
   - refresh token: 기본 1,209,600초 (`JWT_REFRESH_EXPIRATION_SECONDS`)
 - **로그인 성공 응답**: Google OAuth callback에서 access token과 refresh token을 발급한다.
 - **토큰 갱신**: `POST /api/v1/auth/refresh`에 `{"refreshToken":"..."}`를 전달한다.
@@ -96,6 +96,13 @@ docker compose down -v   # 볼륨까지 삭제
 - **메뉴 정렬**: `sort_order` 오름차순을 기본으로 하며, 같은 순서에서는 메뉴 ID 오름차순으로 정렬한다.
 - **예외**: 장소가 존재하지 않거나 비활성·삭제 상태이면 `404 Not Found`를 반환한다.
 - **Local Score**: 별도 Local Score 모델 작업에서 상세 응답 연계를 확장한다.
+
+## 현재 API 구현 범위 정리
+
+- 현재 구현된 인증 진입점은 `GET /auth/oauth2/google`, `GET /auth/oauth2/google/callback`, 토큰 갱신은 `POST /api/v1/auth/refresh`이다.
+- 장소 목록 응답은 `places`와 `page`, `size`, `totalElements`, `totalPages`를 사용한다. 기본 정렬은 `createdAt,desc`이다.
+- 장소 상세 응답은 장소 기본 정보, 지역·카테고리, `PlaceFeature`, `recommendedMenus`를 제공한다. 이미지·운영시간·Local Score·AI 리뷰 요약·Local Tip은 후속 도메인 구현 범위다.
+- 키워드 검색, 즐겨찾기, Local Score, AI 리뷰 요약은 현재 데이터베이스 설계 또는 제품 요구사항에 포함된 후속 구현 범위이며 현재 백엔드 엔드포인트로 제공되지 않는다.
 
 상세 작업 단계는 `memory-bank/project-brief.md`와 `AGENTS.md`를 따른다.
 > Git 브랜치/커밋은 GitHub 연동(Jira 자동화)과 함께 연동 확인됨.

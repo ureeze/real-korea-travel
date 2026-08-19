@@ -17,7 +17,7 @@ class JwtTokenProviderTest {
         // 테스트마다 동일한 서명 키와 만료 시간을 사용하는 토큰 제공자를 준비한다.
         jwtTokenProvider = new JwtTokenProvider(
                 "test-secret-that-is-at-least-32-characters-long",
-                900,
+                3600,
                 1209600
         );
     }
@@ -29,7 +29,7 @@ class JwtTokenProviderTest {
 
         assertThat(jwtTokenProvider.getMemberIdFromAccessToken(tokens.accessToken())).isEqualTo(42L);
         assertThat(jwtTokenProvider.getMemberIdFromRefreshToken(tokens.refreshToken())).isEqualTo(42L);
-        assertThat(tokens.accessTokenExpiresInSeconds()).isEqualTo(900L);
+        assertThat(tokens.accessTokenExpiresInSeconds()).isEqualTo(3600L);
     }
 
     @Test

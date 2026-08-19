@@ -141,6 +141,15 @@ Jira 작업 시작
 - Java/Spring 테스트는 JUnit 5와 Spring Boot Test를 기준으로 한다.
 - DB 제약, Migration, 동시성은 통합 테스트로 검증한다.
 
+## ADR 규칙
+
+- 정식 ADR은 `docs/adr/`에 `000N-short-title.md` 형식으로 작성한다.
+- ADR에는 Context, Decision, Consequences, Follow-up을 포함한다.
+- API, DB, 인증, 아키텍처처럼 영향 범위가 크거나 되돌리기 비용이 큰 기술 결정은 구현 전에 ADR을 작성한다.
+- 이미 적용된 중요한 결정도 필요하면 현재 시점에 소급하여 ADR로 기록할 수 있으며, 작성 시점과 소급 기록 여부를 명시한다.
+- Notion은 팀 공유용 요약, `memory-bank/decisions.md`는 ADR 인덱스로 유지한다.
+- 기존 결정을 변경할 때는 기존 ADR을 삭제하지 않고 `Superseded`로 표시한 뒤 새 ADR을 추가한다.
+
 ## 배포 규칙
 
 - 현재 프로젝트는 초기 로컬 개발 기준이다.
