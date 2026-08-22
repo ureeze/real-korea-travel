@@ -18,6 +18,7 @@
 - [x] **장소 상세 조회 정책** — RKT-19에서 `ACTIVE` 상태이며 삭제되지 않은 장소만 ID로 조회하고, 장소 기본 정보와 `PlaceFeature`·메뉴 목록을 함께 반환한다. 메뉴는 `sort_order`와 ID 오름차순으로 정렬하며 Local Score는 별도 모델 작업에서 연계한다 (2026-08-18).
 - [x] **일반 수치 타입 정책** — 특별한 저장 공간 최적화 이유가 없는 단순 수치 필드는 Java `Short`와 PostgreSQL `SMALLINT` 대신 `Integer`와 `INTEGER`를 우선 사용한다. RKT-19에서 `PlaceFeature.avgWaitTimeMin`에 적용했다 (2026-08-18).
 - [x] **현재 API 계약 정합성** — 실제 구현된 Google OAuth 진입점과 장소 목록·상세 응답 구조를 OpenAPI·PRD·ERD 및 Memory Bank에 반영한다. Access token 기본 만료시간은 3600초(1시간), refresh token은 1,209,600초로 유지한다 (2026-08-19).
+- [x] **키워드 검색 및 필터 조회 정책** — RKT-20에서 `GET /api/v1/search`를 추가하고 장소명·주소·설명에 PostgreSQL `ILIKE` 부분 문자열 검색을 적용한다. 지역·카테고리·영어 메뉴·혼밥·카드 결제·Local Score 추천·최대 대기시간 필터와 페이징을 함께 지원한다. Local Score 추천 기준은 초기 구현에서 `local_recommend_score >= 70`로 둔다 (2026-08-22).
 
 ## 잠정 합의 (현재까지)
 - URL 파라미터는 소문자, 응답 `code` 는 대문자 표기.

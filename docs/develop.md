@@ -98,12 +98,22 @@ docker compose down -v   # 볼륨까지 삭제
 - **예외**: 장소가 존재하지 않거나 비활성·삭제 상태이면 `404 Not Found`를 반환한다.
 - **Local Score**: 별도 Local Score 모델 작업에서 상세 응답 연계를 확장한다.
 
+## 키워드 검색 API (RKT-20)
+
+- **엔드포인트**: `GET /api/v1/search?keyword={keyword}`
+- **검색 방식**: 장소명·주소·설명에 PostgreSQL `ILIKE` 부분 문자열 검색을 적용한다.
+- **필터**: `region`, `category`, `englishMenu`, `soloFriendly`, `cardAvailable`, `localRecommended`, `maxWaitTimeMin`을 선택적으로 조합한다.
+- **페이징**: `page`는 0부터 시작하고 `size` 기본값은 20, 최대값은 100이다.
+- **추천 기준**: 초기 구현에서는 `local_score.local_recommend_score >= 70`인 장소를 `localRecommended=true`로 판단한다.
+- **조회 대상**: `ACTIVE` 상태이고 soft delete되지 않은 장소만 반환한다.
+- **검색어 처리**: 검색어 앞뒤 공백을 제거한 뒤 장소명·주소·설명 중 하나라도 포함하면 검색 결과에 포함한다.
+
 ## 현재 API 구현 범위 정리
 
 - 현재 구현된 인증 진입점은 `GET /auth/oauth2/google`, `GET /auth/oauth2/google/callback`, 토큰 갱신은 `POST /api/v1/auth/refresh`이다.
 - 장소 목록 응답은 `places`와 `page`, `size`, `totalElements`, `totalPages`를 사용한다. 기본 정렬은 `createdAt,desc`이다.
 - 장소 상세 응답은 장소 기본 정보, 지역·카테고리, `PlaceFeature`, `recommendedMenus`를 제공한다. 이미지·운영시간·Local Score·AI 리뷰 요약·Local Tip은 후속 도메인 구현 범위다.
-- 키워드 검색, 즐겨찾기, Local Score, AI 리뷰 요약은 현재 데이터베이스 설계 또는 제품 요구사항에 포함된 후속 구현 범위이며 현재 백엔드 엔드포인트로 제공되지 않는다.
+- 키워드 검색은 `GET /api/v1/search`로 구현되었고, 즐겨찾기·Local Score 고도화·AI 리뷰 요약은 후속 구현 범위다.
 
 상세 작업 단계는 `memory-bank/project-brief.md`와 `AGENTS.md`를 따른다.
 > Git 브랜치/커밋은 GitHub 연동(Jira 자동화)과 함께 연동 확인됨.
