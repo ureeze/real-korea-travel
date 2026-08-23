@@ -13,14 +13,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
+import com.realkoreatravel.support.PostgresTestcontainersConfiguration;
 
 /** 지역·카테고리 필터와 활성 장소 조건이 실제 JPA 쿼리에서 동작하는지 검증하는 통합 테스트다. */
 @ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(PostgresTestcontainersConfiguration.class)
 class PlaceRepositoryTest {
 
     @Autowired
