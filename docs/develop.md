@@ -34,6 +34,14 @@ docker compose down -v   # 볼륨까지 삭제
 - 데이터는 named volume(`postgres-data`, `redis-data`)에 유지되어 `down` 후에도 보존
 - PostgreSQL 18+ 이미지는 데이터 파일 상위 디렉터리(`/var/lib/postgresql`)에 볼륨을 마운트해야 한다 (전용 하위 디렉터리 사용)
 
+## 테스트 환경 (RKT-33)
+
+- Controller·Service 단위 테스트는 외부 DB 없이 실행한다.
+- Repository·Integration 테스트는 운영과 동일한 PostgreSQL 18.4 Testcontainers를 사용한다.
+- Testcontainers 테스트를 실행하려면 Docker Desktop이 실행 중이어야 한다.
+- 테스트 실행 명령: `./gradlew test`
+- 새 Repository·Integration 테스트에는 H2를 사용하지 않는다. 기존 H2 테스트는 범위와 위험도를 검토해 단계적으로 전환한다.
+
 ## DB 스키마 (RKT-11, Flyway)
 
 - 마이그레이션 파일: `backend/src/main/resources/db/migration/` (`V1__create_tables.sql`, `V2__seed_base_data.sql`)

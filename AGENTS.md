@@ -137,9 +137,83 @@ Jira 작업 시작
 
 ## 테스트 규칙
 
-- 구현 변경이 있으면 관련 테스트 또는 검증 방법을 함께 수행한다.
-- Java/Spring 테스트는 JUnit 5와 Spring Boot Test를 기준으로 한다.
-- DB 제약, Migration, 동시성은 통합 테스트로 검증한다.
+- 구현 변경이 있으면 변경된 계층에 맞는 관련 테스트 또는 검증 방법을 함께 수행한다.
+- 테스트는 Controller, Service, Repository, Integration의 네 가지 유형으로 책임을 분리한다.
+- Java/Spring 테스트는 Java 25, Spring Boot 4.1.0, JUnit Jupiter, Mockito, AssertJ를 기준으로 한다.
+- 기본 테스트 의존성은 `spring-boot-starter-test`를 사용한다.
+
+### 테스트 유형별 기준
+
+| 테스트 유형 | 검증 범위 | Spring Context | DB 및 주요 도구 |
+|---|---|---|---|
+| Controller Test | HTTP Method, URL, 파라미터, 검증, 응답, 인증·인가 | `@WebMvcTest` | DB 미사용, `MockMvc`, `@MockitoBean` |
+| Service Test | 비즈니스 규칙, 상태·권한·예외, 의존성 호출 | 사용하지 않음 | `@ExtendWith(MockitoExtension.class)`, `@Mock`, `@InjectMocks` |
+| Repository Test | JPA, Query, Mapping, Pagination, Constraint, PostgreSQL 기능 | `@DataJpaTest` | PostgreSQL Testcontainers |
+| Integration Test | Controller → Service → Repository 전체 연결 | `@SpringBootTest` | PostgreSQL Testcontainers |
+
+### Controller Test
+
+- HTTP 계층의 동작만 검증하고 Service의 비즈니스 로직이나 JPA Query를 검증하지 않는다.
+- `@WebMvcTest(대상Controller.class)`와 `MockMvc`를 사용한다.
+- Service 의존성은 Spring Boot 4.x 기준 `@MockitoBean`으로 대체한다. 신규 테스트에서 `@MockBean`은 사용하지 않는다.
+- 정상 응답, Validation 실패, 비즈니스 예외의 HTTP 변환, 인증 실패 `401`, 인가 실패 `403`을 필요한 범위에서 검증한다.
+- 단순 HTTP 테스트에 `@SpringBootTest`를 사용하지 않는다.
+
+### Service Test
+
+- Spring Context와 실제 Database를 로딩하지 않는다.
+- Repository 등 외부 의존성은 `@Mock`, 테스트 대상 Service는 `@InjectMocks`로 구성한다.
+- 정상 흐름뿐 아니라 비즈니스 조건, 존재 여부, 중복, 상태·권한 검사, 예외 타입·메시지·Error Code, 경계 조건을 우선 검증한다.
+- Service Test에서 Controller 호출, HTTP 요청, 실제 Repository 구현, JPA Query 검증은 하지 않는다.
+
+### Repository·Integration Test Database
+
+- Production Database가 PostgreSQL이므로 Repository Test와 Integration Test는 H2가 아닌 PostgreSQL Testcontainers를 사용한다.
+- PostgreSQL 전용 SQL·함수, `JSONB`, Array, `ILIKE`, Native Query, Index, Constraint 등은 실제 PostgreSQL 엔진으로 검증한다.
+- Testcontainers PostgreSQL 버전은 Production PostgreSQL 버전과 일치시키며 `latest`를 사용하지 않는다.
+- PostgreSQL Container 설정은 공통화하고, 각 테스트 클래스에서 중복 생성하지 않는다.
+- 테스트 간 데이터 의존성을 만들지 않으며 각 테스트가 필요한 데이터를 직접 준비한다.
+- DB 변경사항이나 Constraint 검증처럼 실제 SQL 실행이 필요한 경우에만 `flush()`와 `clear()`를 명시적으로 사용한다.
+- Spring Data JPA가 제공하는 단순 CRUD 자체는 중복 테스트하지 않고, 프로젝트에서 작성한 Query·Mapping·관계·페이징·검색 조건을 우선 검증한다.
+- DB 제약, Migration, 동시성은 실제 PostgreSQL 기반 테스트로 검증한다.
+
+### Integration Test
+
+- 전체 Spring Context가 필요한 경우 `@SpringBootTest`를 사용한다.
+- 실제 HTTP 흐름이 필요하면 `@SpringBootTest`와 `@AutoConfigureMockMvc`를 함께 사용한다.
+- 애플리케이션 내부 Controller·Service·Repository Bean은 실제 구현을 사용하고, 외부 결제·인증·HTTP·메시지·Storage 시스템만 필요한 경우 Mock할 수 있다.
+- Transaction 경계, Commit·Rollback, Async·Event, 별도 Transaction 자체가 검증 대상이면 `@Transactional`로 동작을 왜곡하지 않는다.
+
+### 공통 테스트 작성 원칙
+
+- 테스트는 가능한 작은 범위에서 빠르게 실행한다.
+- Given / When / Then 구조와 비즈니스 의미가 드러나는 테스트 이름을 사용한다.
+- 정상·예외·경계 케이스를 검토하되, 단순 Getter/Setter·생성자·Framework 자체 동작·의미 없는 Coverage용 테스트는 만들지 않는다.
+- Mock은 테스트 대상의 외부 의존성을 격리하는 목적으로만 사용하고, 테스트 대상 자체를 Mock하지 않는다.
+- 기존 테스트가 실패하면 구현 버그, 요구사항 변경, 잘못된 기대값, 오래된 구현 의존성, Test DB 문제 순서로 원인을 분석한다. 테스트 삭제·비활성화·Assertion 완화로 해결하지 않는다.
+
+### 테스트 실행 순서
+
+1. 변경된 클래스의 직접 테스트를 실행한다.
+2. 관련 Integration Test를 실행한다.
+3. 공통 코드·핵심 기능·영향 범위가 넓은 변경이면 전체 테스트를 실행한다.
+
+### H2 및 Testcontainers 예외
+
+- 기존 H2 테스트를 한 번에 모두 마이그레이션할 필요는 없지만, 새로운 Repository Test와 Integration Test에는 H2를 사용하지 않는다.
+- Testcontainers 테스트는 로컬과 CI 모두 Docker 및 PostgreSQL Container 실행이 전제다.
+- Docker를 사용할 수 없다는 이유로 임의로 H2로 바꾸지 않고 환경 문제와 코드 문제를 구분한다.
+
+### 테스트 완료 체크리스트
+
+- [ ] 변경된 계층에 필요한 테스트 유형을 검토했다.
+- [ ] 정상·주요 예외·필요한 경계 케이스를 검증했다.
+- [ ] Repository·Integration Test에서 H2를 사용하지 않았다.
+- [ ] PostgreSQL Testcontainers 버전이 Production 버전과 일치한다.
+- [ ] 불필요한 `@SpringBootTest`, Mock, CRUD 테스트를 추가하지 않았다.
+- [ ] Integration Test에서 내부 Application Bean을 불필요하게 Mock하지 않았다.
+- [ ] 테스트 간 실행 순서 의존성이 없다.
+- [ ] 전체 테스트가 통과했으며 테스트를 통과시키기 위해 기능 코드를 왜곡하지 않았다.
 
 ## ADR 규칙
 

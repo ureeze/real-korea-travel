@@ -1,69 +1,70 @@
 package com.realkoreatravel.auth.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.realkoreatravel.auth.dto.RefreshTokenRequest;
-import com.realkoreatravel.auth.dto.TokenResponse;
 import com.realkoreatravel.auth.jwt.JwtTokenProvider;
 import com.realkoreatravel.auth.jwt.JwtTokenProvider.IssuedTokens;
-import com.realkoreatravel.common.response.ApiResponse;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
 
-/** refresh token을 이용한 토큰 재발급 API의 정상 및 실패 응답을 확인하는 테스트다. */
+/** refresh token 재발급 endpoint의 HTTP 응답과 오류 응답을 검증한다. */
+@WebMvcTest(AuthTokenController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class AuthTokenControllerTest {
 
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockitoBean
     private JwtTokenProvider jwtTokenProvider;
-    private AuthTokenController authTokenController;
 
-    @BeforeEach
-    void setUp() {
-        // 웹 계층 전체를 띄우지 않고 Controller와 JWT 제공자만 직접 연결한다.
-        jwtTokenProvider = new JwtTokenProvider(
-                "test-secret-that-is-at-least-32-characters-long",
-                3600,
-                1209600
-        );
-        authTokenController = new AuthTokenController(jwtTokenProvider);
+    @Test
+    @DisplayName("유효한 refresh token으로 새 토큰 쌍을 반환한다")
+    void validRefreshTokenReturnsNewTokenPair() throws Exception {
+        IssuedTokens tokens = new IssuedTokens("access-token", "refresh-token", 3600L);
+        when(jwtTokenProvider.getMemberIdFromRefreshToken("refresh-token")).thenReturn(42L);
+        when(jwtTokenProvider.issueTokens(42L)).thenReturn(tokens);
+
+        mockMvc.perform(post("/api/v1/auth/refresh")
+                        .contentType("application/json")
+                        .content("{\"refreshToken\":\"refresh-token\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value("SUCCESS"))
+                .andExpect(jsonPath("$.data.accessToken").value("access-token"))
+                .andExpect(jsonPath("$.data.refreshToken").value("refresh-token"));
     }
 
     @Test
-    void validRefreshTokenReturnsNewTokenPair() {
-        // 유효한 refresh token이면 새 access/refresh token 쌍을 반환해야 한다.
-        IssuedTokens issuedTokens = jwtTokenProvider.issueTokens(42L);
+    @DisplayName("유효하지 않은 refresh token이면 401을 반환한다")
+    void invalidRefreshTokenReturnsUnauthorized() throws Exception {
+        when(jwtTokenProvider.getMemberIdFromRefreshToken("invalid-token"))
+                .thenThrow(new IllegalArgumentException("유효하지 않은 JWT 토큰입니다."));
 
-        ResponseEntity<ApiResponse<TokenResponse>> response =
-                authTokenController.refresh(new RefreshTokenRequest(issuedTokens.refreshToken()));
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().data().accessToken()).isNotBlank();
-        assertThat(response.getBody().data().refreshToken()).isNotBlank();
-        assertThat(jwtTokenProvider.getMemberIdFromAccessToken(response.getBody().data().accessToken()))
-                .isEqualTo(42L);
+        mockMvc.perform(post("/api/v1/auth/refresh")
+                        .contentType("application/json")
+                        .content("{\"refreshToken\":\"invalid-token\"}"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("INVALID_REFRESH_TOKEN"));
     }
 
     @Test
-    void invalidRefreshTokenReturnsUnauthorized() {
-        // 형식과 서명이 유효하지 않은 토큰은 401과 표준 오류 코드를 반환해야 한다.
-        ResponseEntity<ApiResponse<TokenResponse>> response =
-                authTokenController.refresh(new RefreshTokenRequest("invalid-token"));
+    @DisplayName("access token을 refresh token으로 사용할 수 없다")
+    void accessTokenCannotBeUsedForRefresh() throws Exception {
+        when(jwtTokenProvider.getMemberIdFromRefreshToken("access-token"))
+                .thenThrow(new IllegalArgumentException("JWT 토큰 타입이 올바르지 않습니다."));
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().code()).isEqualTo("INVALID_REFRESH_TOKEN");
-    }
-
-    @Test
-    void accessTokenCannotBeUsedForRefresh() {
-        // access token을 refresh token으로 제출해도 재발급해서는 안 된다.
-        IssuedTokens issuedTokens = jwtTokenProvider.issueTokens(42L);
-
-        ResponseEntity<ApiResponse<TokenResponse>> response =
-                authTokenController.refresh(new RefreshTokenRequest(issuedTokens.accessToken()));
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+        mockMvc.perform(post("/api/v1/auth/refresh")
+                        .contentType("application/json")
+                        .content("{\"refreshToken\":\"access-token\"}"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("INVALID_REFRESH_TOKEN"));
     }
 }
