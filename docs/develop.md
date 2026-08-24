@@ -17,6 +17,14 @@ Real Korea Travel 백엔드 개발 시작을 위한 가이드. 기술 버전은 
 1. 기술 스택 버전 확정 (RKT-8) ✅
 2. 프로젝트 생성 & 모듈 구조 (RKT-9) ✅
 3. Docker 로컬 개발 환경 (RKT-10) — PostgreSQL 18, Redis 8 컨테이너 ✅
+
+## Redis 캐시 (RKT-21)
+
+- `placeList`: 장소 목록 응답을 5분 동안 캐싱한다.
+- `placeDetail`: 장소 상세 응답을 10분 동안 캐싱한다.
+- `searchResult`: 검색 조건별 결과를 3분 동안 캐싱한다.
+- 캐시 키에는 요청 조건 또는 장소 ID가 포함되며, 동일 요청은 Redis 값을 우선 사용한다.
+- Local Score 전용 캐시는 Local Score 기능 구현 후 별도로 연계한다.
 4. DB 스키마 초기화 (RKT-11) — Flyway, `flyway-database-postgresql` 모듈 필수
 
 ## 로컬 개발 환경 (RKT-10)
