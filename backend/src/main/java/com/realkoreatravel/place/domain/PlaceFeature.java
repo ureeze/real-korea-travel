@@ -21,46 +21,46 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlaceFeature {
 
+    /** 편의정보를 식별하는 데이터베이스 기본 키. */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    /** 편의정보를 식별하는 데이터베이스 기본 키. */
     private Long id;
 
+    /** 편의정보가 속한 장소. */
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "place_id", nullable = false, unique = true)
-    /** 편의정보가 속한 장소. */
     private Place place;
 
-    @Column(name = "english_menu", nullable = false)
     /** 영어 메뉴 제공 여부. */
+    @Column(name = "english_menu", nullable = false)
     private boolean englishMenu;
 
-    @Column(name = "card_available", nullable = false)
     /** 카드 결제 가능 여부. */
+    @Column(name = "card_available", nullable = false)
     private boolean cardAvailable;
 
-    @Column(name = "solo_friendly", nullable = false)
     /** 혼자 방문하기 좋은 장소인지 여부. */
+    @Column(name = "solo_friendly", nullable = false)
     private boolean soloFriendly;
 
-    @Column(name = "reservation_required", nullable = false)
     /** 방문 전 예약 필요 여부. */
+    @Column(name = "reservation_required", nullable = false)
     private boolean reservationRequired;
 
-    @Column(name = "parking_available", nullable = false)
     /** 주차 가능 여부. */
+    @Column(name = "parking_available", nullable = false)
     private boolean parkingAvailable;
 
-    @Column(name = "avg_wait_time_min", nullable = false)
     /** 평균 대기시간(분). */
+    @Column(name = "avg_wait_time_min", nullable = false)
     private Integer avgWaitTimeMin;
 
-    @Column(name = "created_at", nullable = false)
     /** 편의정보가 생성된 시각. */
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
-    @Column(name = "updated_at", nullable = false)
     /** 편의정보가 마지막으로 수정된 시각. */
+    @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
     /** 장소의 외국인 편의정보를 생성하고 생성·수정 시각을 초기화한다. */
@@ -81,9 +81,6 @@ public class PlaceFeature {
         this.reservationRequired = reservationRequired;
         this.parkingAvailable = parkingAvailable;
         this.avgWaitTimeMin = avgWaitTimeMin;
-        if (place != null) {
-            place.assignFeature(this);
-        }
         Instant now = Instant.now();
         this.createdAt = now;
         this.updatedAt = now;

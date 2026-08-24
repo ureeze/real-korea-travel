@@ -21,9 +21,8 @@ public record PlaceDetailResponse(
         List<MenuResponse> recommendedMenus
 ) {
 
-    /** 장소 Entity와 연관 데이터를 상세 조회 응답으로 변환한다. */
-    public static PlaceDetailResponse from(Place place) {
-        PlaceFeature feature = place.getFeature();
+    /** 장소 Entity와 별도로 조회한 편의정보를 상세 응답으로 변환한다. */
+    public static PlaceDetailResponse from(Place place, PlaceFeature feature) {
         return PlaceDetailResponse.builder()
                 .id(place.getId())
                 .name(place.getName())

@@ -38,12 +38,11 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
             Pageable pageable
     );
 
-    /** 활성·미삭제 장소와 상세 화면에 필요한 편의정보·메뉴를 함께 조회한다. */
+    /** 활성·미삭제 장소와 상세 화면에 필요한 장소 기본 정보·메뉴를 함께 조회한다. */
     @Query("""
             select distinct p from Place p
             join fetch p.region
             join fetch p.category
-            left join fetch p.feature
             left join fetch p.menus
             where p.id = :placeId
               and p.status = :status
