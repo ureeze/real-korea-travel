@@ -22,7 +22,7 @@
 | `menu` | 장소 메뉴 | 구현 |
 | `opening_hour` | 요일별 운영시간 | DB 설계·Migration 포함, API 후속 |
 | `place_image` | 장소 이미지 | DB 설계·Migration 포함, API 후속 |
-| `local_score` | 현지인 점수 | DB 설계·Migration 포함, API 후속 |
+| `local_score` | 현지인 점수 | Entity·Repository 구현, API 후속 |
 | `ai_review_summary` | AI 리뷰 요약 | DB 설계·Migration 포함, API 후속 |
 | `local_tip` | 현지인 팁 | DB 설계·Migration 포함, API 후속 |
 | `bookmark` | 회원별 즐겨찾기 | DB 설계·Migration 포함, API 후속 |
@@ -52,3 +52,6 @@ REGION 1:N REGION (자기참조)
 - DB 컬럼이나 제약을 변경할 때는 기존 Migration을 수정하지 않고 새 Flyway Migration을 추가한다.
 - Migration과 Notion ERD가 다르면 실제 적용 여부는 Migration, 설계 의도는 Notion ERD에서 확인한 뒤 ADR 또는 결정 기록을 갱신한다.
 - 이 파일에 상세 컬럼을 복사해 추가하지 않는다. 상세 설계가 필요하면 Notion ERD를 갱신한다.
+- `local_score`는 `place_id` UNIQUE 제약으로 Place와 1:1 관계를 유지하며, Local Score API는 후속 티켓에서 구현한다.
+- 현재 Entity 매핑은 `LocalScore → Place` 단방향으로 유지해 Place 조회 시 Local Score의 비소유자 측 지연 로딩 문제를 피한다.
+- `place_feature`는 `place_id` UNIQUE 제약을 가진 `PlaceFeature → Place` 단방향 Entity 매핑을 사용하고, 장소 상세 조회 시 전용 Repository로 편의정보를 조회한다.

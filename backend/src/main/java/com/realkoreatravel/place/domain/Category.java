@@ -17,21 +17,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category {
 
+    /** 카테고리를 식별하는 데이터베이스 기본 키 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    /** 카테고리를 식별하는 데이터베이스 기본 키 */
     private Long id;
 
-    @Column(nullable = false, length = 50)
     /** 사용자에게 표시할 카테고리명 */
+    @Column(nullable = false, length = 50)
     private String name;
 
-    @Column(nullable = false, unique = true, length = 50)
     /** API와 DB 조회에 사용하는 카테고리 고유 코드 */
+    @Column(nullable = false, unique = true, length = 50)
     private String code;
 
-    @Column(name = "display_order", nullable = false)
     /** 카테고리 목록에서 표시할 순서 */
+    @Column(name = "display_order", nullable = false)
     private int displayOrder;
 
     @Builder

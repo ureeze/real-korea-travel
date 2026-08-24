@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
@@ -29,73 +28,69 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Place {
 
+    /** 장소를 식별하는 데이터베이스 기본 키 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    /** 장소를 식별하는 데이터베이스 기본 키 */
     private Long id;
 
+    /** 장소가 속한 지역 분류 */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "region_id", nullable = false)
-    /** 장소가 속한 지역 분류 */
     private Region region;
 
+    /** 장소의 업종·분류 정보 */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
-    /** 장소의 업종·분류 정보 */
     private Category category;
 
-    @Column(nullable = false, length = 100)
     /** 사용자에게 표시할 장소명 */
+    @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, length = 255)
     /** 장소가 위치한 도로명 또는 지번 주소 */
+    @Column(nullable = false, length = 255)
     private String address;
 
-    @Column(precision = 10, scale = 7)
     /** 장소의 위도 좌표 */
+    @Column(precision = 10, scale = 7)
     private BigDecimal latitude;
 
-    @Column(precision = 10, scale = 7)
     /** 장소의 경도 좌표 */
+    @Column(precision = 10, scale = 7)
     private BigDecimal longitude;
 
-    @Column(length = 30)
     /** 장소에 연락할 수 있는 전화번호 */
+    @Column(length = 30)
     private String phone;
 
-    @Column(name = "price_level")
     /** 가격대를 1~4 단계로 표현한 값 */
+    @Column(name = "price_level")
     private Short priceLevel;
 
-    @Column(columnDefinition = "TEXT")
     /** 장소에 대한 상세 설명 */
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "google_place_id", unique = true, length = 255)
     /** Google Places API에서 사용하는 외부 장소 식별자 */
+    @Column(name = "google_place_id", unique = true, length = 255)
     private String googlePlaceId;
 
+    /** 장소의 운영 상태와 노출 상태 */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    /** 장소의 운영 상태와 노출 상태 */
     private PlaceStatus status = PlaceStatus.ACTIVE;
 
-    @Column(name = "created_at", nullable = false)
     /** 장소 데이터가 생성된 시각 */
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
-    @Column(name = "updated_at", nullable = false)
     /** 장소 데이터가 마지막으로 수정된 시각 */
+    @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    @Column(name = "deleted_at")
     /** soft delete 처리된 시각; null이면 삭제되지 않은 상태 */
+    @Column(name = "deleted_at")
     private Instant deletedAt;
-
-    /** 장소별 외국인 편의정보. */
-    @OneToOne(mappedBy = "place", fetch = FetchType.LAZY)
-    private PlaceFeature feature;
 
     /** 장소에 등록된 메뉴 목록이며 표시 순서 기준으로 정렬된다. */
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
@@ -139,11 +134,6 @@ public class Place {
         Instant now = Instant.now();
         this.deletedAt = now;
         this.updatedAt = now;
-    }
-
-    /** PlaceFeature 생성 시 양방향 연관관계의 반대편을 연결한다. */
-    void assignFeature(PlaceFeature feature) {
-        this.feature = feature;
     }
 
     /** Menu 생성 시 장소의 메뉴 컬렉션에 새 메뉴를 추가한다. */

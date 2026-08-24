@@ -16,6 +16,7 @@ import com.realkoreatravel.place.dto.PlaceListResponse;
 import com.realkoreatravel.place.dto.PlaceDetailResponse;
 import com.realkoreatravel.place.dto.PlaceSearchCondition;
 import com.realkoreatravel.place.repository.PlaceRepository;
+import com.realkoreatravel.place.repository.PlaceFeatureRepository;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,9 @@ class PlaceServiceTest {
 
     @Mock
     private PlaceRepository placeRepository;
+
+    @Mock
+    private PlaceFeatureRepository placeFeatureRepository;
 
     @InjectMocks
     private PlaceService placeService;
@@ -124,6 +128,7 @@ class PlaceServiceTest {
                 .build();
         when(placeRepository.findActivePlaceDetail(eq(42L), eq(PlaceStatus.ACTIVE)))
                 .thenReturn(Optional.of(place));
+        when(placeFeatureRepository.findByPlaceId(42L)).thenReturn(Optional.of(feature));
 
         PlaceDetailResponse response = placeService.findPlace(42L);
 
@@ -133,5 +138,6 @@ class PlaceServiceTest {
         assertThat(response.recommendedMenus()).extracting(PlaceDetailResponse.MenuResponse::name)
                 .containsExactly("시그니처 라떼");
         verify(placeRepository).findActivePlaceDetail(42L, PlaceStatus.ACTIVE);
+        verify(placeFeatureRepository).findByPlaceId(42L);
     }
 }

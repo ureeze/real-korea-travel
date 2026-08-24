@@ -2,10 +2,12 @@ package com.realkoreatravel.place.service;
 
 import com.realkoreatravel.common.config.RedisCacheConfig.CacheNames;
 import com.realkoreatravel.place.domain.Place;
+import com.realkoreatravel.place.domain.PlaceFeature;
 import com.realkoreatravel.place.domain.PlaceStatus;
 import com.realkoreatravel.place.dto.PlaceDetailResponse;
 import com.realkoreatravel.place.dto.PlaceListResponse;
 import com.realkoreatravel.place.dto.PlaceSearchCondition;
+import com.realkoreatravel.place.repository.PlaceFeatureRepository;
 import com.realkoreatravel.place.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -27,6 +29,7 @@ public class PlaceService {
     private static final int MAX_PAGE_SIZE = 100;
 
     private final PlaceRepository placeRepository;
+    private final PlaceFeatureRepository placeFeatureRepository;
 
     /** 필터·페이징 조건으로 활성 장소를 조회해 목록 응답으로 변환한다. */
     @Cacheable(cacheNames = CacheNames.PLACE_LIST, key = "#condition.toString()")
@@ -41,7 +44,7 @@ public class PlaceService {
         return PlaceListResponse.from(places);
     }
 
-    /** 활성·미삭제 장소를 ID로 조회하고 상세 화면용 응답으로 변환한다. */
+    /** 활성·미삭제 장소와 편의정보를 조회해 상세 화면용 응답으로 변환한다. */
     @Cacheable(cacheNames = CacheNames.PLACE_DETAIL, key = "#placeId")
     public PlaceDetailResponse findPlace(Long placeId) {
         Place place = placeRepository.findActivePlaceDetail(placeId, PlaceStatus.ACTIVE)
@@ -49,7 +52,8 @@ public class PlaceService {
                         HttpStatus.NOT_FOUND,
                         "장소를 찾을 수 없습니다."
                 ));
-        return PlaceDetailResponse.from(place);
+        PlaceFeature feature = placeFeatureRepository.findByPlaceId(placeId).orElse(null);
+        return PlaceDetailResponse.from(place, feature);
     }
 
     /** 요청의 페이징·정렬 파라미터를 안전한 Spring Pageable로 변환한다. */

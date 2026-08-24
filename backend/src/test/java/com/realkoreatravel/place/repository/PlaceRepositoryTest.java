@@ -163,9 +163,10 @@ class PlaceRepositoryTest {
 
         Place result = placeRepository.findActivePlaceDetail(place.getId(), PlaceStatus.ACTIVE)
                 .orElseThrow();
+        PlaceFeature feature = placeFeatureRepository.findByPlaceId(place.getId()).orElseThrow();
 
-        // 상세 조회 결과에서 편의정보와 메뉴가 함께 초기화되는지 검증한다.
-        assertThat(result.getFeature().isEnglishMenu()).isTrue();
+        // 장소 상세 쿼리는 장소·메뉴를 조회하고 편의정보는 전용 Repository에서 조회하는지 검증한다.
+        assertThat(feature.isEnglishMenu()).isTrue();
         assertThat(result.getMenus()).extracting(Menu::getName)
                 .containsExactly("추천 메뉴");
     }
