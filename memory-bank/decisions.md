@@ -20,6 +20,7 @@
 - [x] **현재 API 계약 정합성** — 실제 구현된 Google OAuth 진입점과 장소 목록·상세 응답 구조를 OpenAPI·PRD·ERD 및 Memory Bank에 반영한다. Access token 기본 만료시간은 3600초(1시간), refresh token은 1,209,600초로 유지한다 (2026-08-19).
 - [x] **키워드 검색 및 필터 조회 정책** — RKT-20에서 `GET /api/v1/search`를 추가하고 장소명·주소·설명에 PostgreSQL `ILIKE` 부분 문자열 검색을 적용한다. 지역·카테고리·영어 메뉴·혼밥·카드 결제·Local Score 추천·최대 대기시간 필터와 페이징을 함께 지원한다. Local Score 추천 기준은 초기 구현에서 `local_recommend_score >= 70`로 둔다 (2026-08-22).
 - [x] **테스트 Database 정책** — RKT-33에서 Repository·Integration 테스트는 운영과 동일한 PostgreSQL 18.4 Testcontainers를 사용하고, Controller·Service 단위 테스트는 Database 없이 검증한다. 신규 DB 테스트에는 H2를 사용하지 않는다 (2026-08-22).
+- [x] **Redis 캐시 정책** — RKT-21에서 장소 목록은 5분, 장소 상세는 10분, 검색 결과는 3분 TTL로 Redis에 캐싱한다. 캐시 키는 요청 조건 또는 장소 ID를 사용하며, Local Score 전용 캐시는 해당 기능 구현 후 연계한다 (2026-08-23).
 
 ## 잠정 합의 (현재까지)
 - URL 파라미터는 소문자, 응답 `code` 는 대문자 표기.

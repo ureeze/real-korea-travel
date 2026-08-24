@@ -1,5 +1,6 @@
 package com.realkoreatravel.place.service;
 
+import com.realkoreatravel.common.config.RedisCacheConfig.CacheNames;
 import com.realkoreatravel.place.domain.Place;
 import com.realkoreatravel.place.domain.PlaceStatus;
 import com.realkoreatravel.place.dto.PlaceDetailResponse;
@@ -7,6 +8,7 @@ import com.realkoreatravel.place.dto.PlaceListResponse;
 import com.realkoreatravel.place.dto.PlaceSearchCondition;
 import com.realkoreatravel.place.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +29,7 @@ public class PlaceService {
     private final PlaceRepository placeRepository;
 
     /** 필터·페이징 조건으로 활성 장소를 조회해 목록 응답으로 변환한다. */
+    @Cacheable(cacheNames = CacheNames.PLACE_LIST, key = "#condition.toString()")
     public PlaceListResponse findPlaces(PlaceSearchCondition condition) {
         Pageable pageable = createPageable(condition);
         Page<Place> places = placeRepository.findActivePlaces(
@@ -39,6 +42,7 @@ public class PlaceService {
     }
 
     /** 활성·미삭제 장소를 ID로 조회하고 상세 화면용 응답으로 변환한다. */
+    @Cacheable(cacheNames = CacheNames.PLACE_DETAIL, key = "#placeId")
     public PlaceDetailResponse findPlace(Long placeId) {
         Place place = placeRepository.findActivePlaceDetail(placeId, PlaceStatus.ACTIVE)
                 .orElseThrow(() -> new ResponseStatusException(

@@ -1,10 +1,12 @@
 package com.realkoreatravel.search.service;
 
+import com.realkoreatravel.common.config.RedisCacheConfig.CacheNames;
 import com.realkoreatravel.place.domain.PlaceStatus;
 import com.realkoreatravel.place.dto.PlaceListResponse;
 import com.realkoreatravel.search.dto.SearchCondition;
 import com.realkoreatravel.search.repository.SearchRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ public class SearchService {
     private final SearchRepository searchRepository;
 
     /** 검색어와 필터를 정리해 활성 장소 검색 결과를 페이징 응답으로 변환한다. */
+    @Cacheable(cacheNames = CacheNames.SEARCH_RESULT, key = "#condition.toString()")
     @Transactional(readOnly = true)
     public PlaceListResponse search(SearchCondition condition) {
         String keyword = normalizeRequiredKeyword(condition.keyword());
