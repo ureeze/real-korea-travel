@@ -88,4 +88,10 @@ public class LocalScore {
         this.createdAt = now;
         this.updatedAt = now;
     }
+
+    /** 계산된 종합 점수를 저장하고 변경 시각을 갱신한다. */
+    public void updateTotalScore(Integer totalScore) {
+        this.totalScore = totalScore;
+        this.updatedAt = Instant.now();
+    }
 }
