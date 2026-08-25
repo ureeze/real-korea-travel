@@ -109,10 +109,10 @@ docker compose down -v   # 볼륨까지 삭제
 
 - **엔드포인트**: `GET /api/v1/places/{placeId}`
 - **조회 대상**: `ACTIVE` 상태이고 soft delete되지 않은 장소만 반환한다.
-- **응답 범위**: 장소 기본 정보, 지역·카테고리, 외국인 편의정보(`PlaceFeature`), 메뉴 목록을 포함한다.
+- **응답 범위**: 장소 기본 정보, 지역·카테고리, 외국인 편의정보(`PlaceFeature`), 메뉴 목록, Local Score를 포함한다.
 - **메뉴 정렬**: `sort_order` 오름차순을 기본으로 하며, 같은 순서에서는 메뉴 ID 오름차순으로 정렬한다.
 - **예외**: 장소가 존재하지 않거나 비활성·삭제 상태이면 `404 Not Found`를 반환한다.
-- **Local Score**: 별도 Local Score 모델 작업에서 상세 응답 연계를 확장한다.
+- **Local Score**: 종합 점수와 음식·가격·분위기·재방문·현지인 추천 세부 점수를 포함하며, 점수가 없으면 `null`을 반환한다.
 
 ## 키워드 검색 API (RKT-20)
 
@@ -128,7 +128,7 @@ docker compose down -v   # 볼륨까지 삭제
 
 - 현재 구현된 인증 진입점은 `GET /auth/oauth2/google`, `GET /auth/oauth2/google/callback`, 토큰 갱신은 `POST /api/v1/auth/refresh`이다.
 - 장소 목록 응답은 `places`와 `page`, `size`, `totalElements`, `totalPages`를 사용한다. 기본 정렬은 `createdAt,desc`이다.
-- 장소 상세 응답은 장소 기본 정보, 지역·카테고리, `PlaceFeature`, `recommendedMenus`를 제공한다. 이미지·운영시간·Local Score·AI 리뷰 요약·Local Tip은 후속 도메인 구현 범위다.
+- 장소 상세 응답은 장소 기본 정보, 지역·카테고리, `PlaceFeature`, `recommendedMenus`, `localScore`를 제공한다. 이미지·운영시간·AI 리뷰 요약·Local Tip은 후속 도메인 구현 범위다.
 - 키워드 검색은 `GET /api/v1/search`로 구현되었고, 즐겨찾기·Local Score 고도화·AI 리뷰 요약은 후속 구현 범위다.
 
 상세 작업 단계는 `memory-bank/project-brief.md`와 `AGENTS.md`를 따른다.

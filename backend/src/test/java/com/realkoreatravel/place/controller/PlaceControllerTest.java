@@ -65,6 +65,9 @@ class PlaceControllerTest {
                 .address("서울시 성동구")
                 .region("seongsu")
                 .category("cafe")
+                .localScore(PlaceDetailResponse.LocalScoreResponse.builder()
+                        .totalScore(86)
+                        .build())
                 .build();
         when(placeService.findPlace(42L)).thenReturn(data);
 
@@ -72,7 +75,8 @@ class PlaceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("SUCCESS"))
                 .andExpect(jsonPath("$.data.id").value(42))
-                .andExpect(jsonPath("$.data.name").value("테스트 카페"));
+                .andExpect(jsonPath("$.data.name").value("테스트 카페"))
+                .andExpect(jsonPath("$.data.localScore.totalScore").value(86));
 
         verify(placeService).findPlace(42L);
     }

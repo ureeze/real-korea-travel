@@ -6,17 +6,19 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.realkoreatravel.localscore.domain.LocalScore;
+import com.realkoreatravel.localscore.repository.LocalScoreRepository;
 import com.realkoreatravel.place.domain.Category;
 import com.realkoreatravel.place.domain.Menu;
 import com.realkoreatravel.place.domain.Place;
 import com.realkoreatravel.place.domain.PlaceFeature;
 import com.realkoreatravel.place.domain.PlaceStatus;
 import com.realkoreatravel.place.domain.Region;
-import com.realkoreatravel.place.dto.PlaceListResponse;
 import com.realkoreatravel.place.dto.PlaceDetailResponse;
+import com.realkoreatravel.place.dto.PlaceListResponse;
 import com.realkoreatravel.place.dto.PlaceSearchCondition;
-import com.realkoreatravel.place.repository.PlaceRepository;
 import com.realkoreatravel.place.repository.PlaceFeatureRepository;
+import com.realkoreatravel.place.repository.PlaceRepository;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +39,9 @@ class PlaceServiceTest {
 
     @Mock
     private PlaceFeatureRepository placeFeatureRepository;
+
+    @Mock
+    private LocalScoreRepository localScoreRepository;
 
     @InjectMocks
     private PlaceService placeService;
@@ -129,15 +134,52 @@ class PlaceServiceTest {
         when(placeRepository.findActivePlaceDetail(eq(42L), eq(PlaceStatus.ACTIVE)))
                 .thenReturn(Optional.of(place));
         when(placeFeatureRepository.findByPlaceId(42L)).thenReturn(Optional.of(feature));
+        LocalScore localScore = LocalScore.builder()
+                .place(place)
+                .totalScore(86)
+                .foodScore(new BigDecimal("90.0"))
+                .priceScore(new BigDecimal("80.0"))
+                .atmosphereScore(new BigDecimal("85.0"))
+                .revisitScore(new BigDecimal("88.0"))
+                .localRecommendScore(new BigDecimal("85.0"))
+                .build();
+        when(localScoreRepository.findByPlaceId(42L)).thenReturn(Optional.of(localScore));
 
         PlaceDetailResponse response = placeService.findPlace(42L);
 
         // 장소 기본 정보와 연관 정보가 상세 응답으로 변환되는지 검증한다.
         assertThat(response.name()).isEqualTo("테스트 카페");
         assertThat(response.feature().englishMenu()).isTrue();
+        assertThat(response.localScore().totalScore()).isEqualTo(86);
+        assertThat(response.localScore().localRecommendScore()).isEqualByComparingTo("85.0");
         assertThat(response.recommendedMenus()).extracting(PlaceDetailResponse.MenuResponse::name)
                 .containsExactly("시그니처 라떼");
         verify(placeRepository).findActivePlaceDetail(42L, PlaceStatus.ACTIVE);
         verify(placeFeatureRepository).findByPlaceId(42L);
+        verify(localScoreRepository).findByPlaceId(42L);
+    }
+
+    @Test
+    @DisplayName("Local Score가 없는 장소는 상세 응답의 localScore를 null로 반환한다")
+    void findPlaceReturnsNullLocalScoreWhenScoreDoesNotExist() {
+        // Local Score가 아직 생성되지 않은 장소의 상세 조회 상황을 준비한다.
+        Region region = Region.builder().name("성수").code("seongsu").displayOrder(1).build();
+        Category category = Category.builder().name("카페").code("cafe").displayOrder(1).build();
+        Place place = Place.builder()
+                .region(region)
+                .category(category)
+                .name("테스트 카페")
+                .address("서울시 성동구")
+                .build();
+        when(placeRepository.findActivePlaceDetail(eq(42L), eq(PlaceStatus.ACTIVE)))
+                .thenReturn(Optional.of(place));
+        when(placeFeatureRepository.findByPlaceId(42L)).thenReturn(Optional.empty());
+        when(localScoreRepository.findByPlaceId(42L)).thenReturn(Optional.empty());
+
+        PlaceDetailResponse response = placeService.findPlace(42L);
+
+        // 점수가 없는 장소도 상세 조회에 성공하고 localScore만 null로 반환되는지 검증한다.
+        assertThat(response.localScore()).isNull();
+        verify(localScoreRepository).findByPlaceId(42L);
     }
 }
