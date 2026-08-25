@@ -8,6 +8,7 @@
 |---|---|---|---|---|
 |ADR-0001|2026-08-19|API 문서와 실제 구현의 정합성 관리|Accepted|[상세 ADR](../docs/adr/0001-api-documentation-and-implementation-alignment.md)|
 |ADR-0002|2026-08-25|Local Score 점수 산정 정책|Accepted|[상세 ADR](../docs/adr/0002-local-score-calculation-policy.md)|
+|ADR-0003|2026-08-25|OpenAI API 공통 클라이언트 연동 정책|Accepted|[상세 ADR](../docs/adr/0003-openai-client-integration-policy.md)|
 
 ## 진행 중 결정 사항 (미확정)
 - [ ] **Memory Bank 도입** — 2026-08-08 도입 결정함. 구조는 `project-brief.md` 기준. (ADR 화 필요)

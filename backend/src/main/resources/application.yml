@@ -47,3 +47,12 @@ security:
     secret: ${JWT_SECRET}
     access-token-expiration-seconds: ${JWT_ACCESS_EXPIRATION_SECONDS:3600}
     refresh-token-expiration-seconds: ${JWT_REFRESH_EXPIRATION_SECONDS:1209600}
+
+openai:
+  api-key: ${OPENAI_API_KEY:}
+  base-url: ${OPENAI_BASE_URL:https://api.openai.com}
+  model: ${OPENAI_MODEL:gpt-5.6-luna}
+  connect-timeout: ${OPENAI_CONNECT_TIMEOUT:2s}
+  read-timeout: ${OPENAI_READ_TIMEOUT:30s}
+  max-attempts: ${OPENAI_MAX_ATTEMPTS:3}
+  retry-backoff: ${OPENAI_RETRY_BACKOFF:500ms}
