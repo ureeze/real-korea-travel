@@ -1,6 +1,8 @@
 package com.realkoreatravel.place.service;
 
 import com.realkoreatravel.common.config.RedisCacheConfig.CacheNames;
+import com.realkoreatravel.localscore.domain.LocalScore;
+import com.realkoreatravel.localscore.repository.LocalScoreRepository;
 import com.realkoreatravel.place.domain.Place;
 import com.realkoreatravel.place.domain.PlaceFeature;
 import com.realkoreatravel.place.domain.PlaceStatus;
@@ -30,6 +32,7 @@ public class PlaceService {
 
     private final PlaceRepository placeRepository;
     private final PlaceFeatureRepository placeFeatureRepository;
+    private final LocalScoreRepository localScoreRepository;
 
     /** 필터·페이징 조건으로 활성 장소를 조회해 목록 응답으로 변환한다. */
     @Cacheable(cacheNames = CacheNames.PLACE_LIST, key = "#condition.toString()")
@@ -44,16 +47,17 @@ public class PlaceService {
         return PlaceListResponse.from(places);
     }
 
-    /** 활성·미삭제 장소와 편의정보를 조회해 상세 화면용 응답으로 변환한다. */
+    /** 활성·미삭제 장소와 편의정보·Local Score를 조회해 상세 화면용 응답으로 변환한다. */
     @Cacheable(cacheNames = CacheNames.PLACE_DETAIL, key = "#placeId")
     public PlaceDetailResponse findPlace(Long placeId) {
         Place place = placeRepository.findActivePlaceDetail(placeId, PlaceStatus.ACTIVE)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "장소를 찾을 수 없습니다."
-                ));
+        ));
         PlaceFeature feature = placeFeatureRepository.findByPlaceId(placeId).orElse(null);
-        return PlaceDetailResponse.from(place, feature);
+        LocalScore localScore = localScoreRepository.findByPlaceId(placeId).orElse(null);
+        return PlaceDetailResponse.from(place, feature, localScore);
     }
 
     /** 요청의 페이징·정렬 파라미터를 안전한 Spring Pageable로 변환한다. */

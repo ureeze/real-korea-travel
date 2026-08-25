@@ -25,6 +25,7 @@
 - [x] **Redis 캐시 정책** — RKT-21에서 장소 목록은 5분, 장소 상세는 10분, 검색 결과는 3분 TTL로 Redis에 캐싱한다. 캐시 키는 요청 조건 또는 장소 ID를 사용하며, Local Score 전용 캐시는 해당 기능 구현 후 연계한다 (2026-08-23).
 - [x] **Local Score 모델 정책** — RKT-22에서 `LocalScore → Place` 단방향 1:1 관계를 사용하고 종합 점수는 `Integer`, 세부 점수는 `BigDecimal`로 저장한다. 기존 검색 필터와 DB 스키마에 존재하는 `local_recommend_score`도 모델에 포함하며, API와 점수 산정 로직은 후속 티켓에서 구현한다 (2026-08-24).
 - [x] **Local Score 점수 산정 정책** — RKT-23에서 음식·가격·분위기·재방문·현지인 추천 점수에 각각 20%를 적용하고, 평균을 HALF_UP 반올림해 `totalScore`로 저장한다. 상세 결정은 ADR-0002를 참조한다 (2026-08-25).
+- [x] **장소 상세 Local Score 응답 정책** — RKT-24에서 장소 상세 응답에 `localScore`의 종합·세부 점수를 포함한다. 해당 장소에 Local Score가 없으면 `localScore: null`을 반환한다 (2026-08-25).
 - [x] **PlaceFeature 관계 정책** — PlaceFeature의 1:1 관계는 `PlaceFeature → Place` 단방향으로 유지한다. Place 비소유자 측의 `@OneToOne LAZY`가 보장되지 않는 문제를 피하고, 장소 상세 조회에서는 전용 Repository로 편의정보를 조회한다 (2026-08-25).
 
 ## 잠정 합의 (현재까지)

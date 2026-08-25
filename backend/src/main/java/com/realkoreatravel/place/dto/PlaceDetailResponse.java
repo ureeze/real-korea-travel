@@ -1,5 +1,6 @@
 package com.realkoreatravel.place.dto;
 
+import com.realkoreatravel.localscore.domain.LocalScore;
 import com.realkoreatravel.place.domain.Menu;
 import com.realkoreatravel.place.domain.Place;
 import com.realkoreatravel.place.domain.PlaceFeature;
@@ -18,11 +19,12 @@ public record PlaceDetailResponse(
         BigDecimal longitude,
         Integer priceLevel,
         PlaceFeatureResponse feature,
-        List<MenuResponse> recommendedMenus
+        List<MenuResponse> recommendedMenus,
+        LocalScoreResponse localScore
 ) {
 
-    /** 장소 Entity와 별도로 조회한 편의정보를 상세 응답으로 변환한다. */
-    public static PlaceDetailResponse from(Place place, PlaceFeature feature) {
+    /** 장소 Entity와 별도로 조회한 편의정보·Local Score를 상세 응답으로 변환한다. */
+    public static PlaceDetailResponse from(Place place, PlaceFeature feature, LocalScore localScore) {
         return PlaceDetailResponse.builder()
                 .id(place.getId())
                 .name(place.getName())
@@ -34,7 +36,31 @@ public record PlaceDetailResponse(
                 .priceLevel(place.getPriceLevel() == null ? null : place.getPriceLevel().intValue())
                 .feature(feature == null ? null : PlaceFeatureResponse.from(feature))
                 .recommendedMenus(place.getMenus().stream().map(MenuResponse::from).toList())
+                .localScore(localScore == null ? null : LocalScoreResponse.from(localScore))
                 .build();
+    }
+
+    @Builder
+    public record LocalScoreResponse(
+            Integer totalScore,
+            BigDecimal foodScore,
+            BigDecimal priceScore,
+            BigDecimal atmosphereScore,
+            BigDecimal revisitScore,
+            BigDecimal localRecommendScore
+    ) {
+
+        /** LocalScore Entity의 종합·세부 점수를 상세 응답용 DTO로 변환한다. */
+        private static LocalScoreResponse from(LocalScore localScore) {
+            return LocalScoreResponse.builder()
+                    .totalScore(localScore.getTotalScore())
+                    .foodScore(localScore.getFoodScore())
+                    .priceScore(localScore.getPriceScore())
+                    .atmosphereScore(localScore.getAtmosphereScore())
+                    .revisitScore(localScore.getRevisitScore())
+                    .localRecommendScore(localScore.getLocalRecommendScore())
+                    .build();
+        }
     }
 
     @Builder
