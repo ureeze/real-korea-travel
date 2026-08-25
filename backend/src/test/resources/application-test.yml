@@ -23,3 +23,12 @@ security:
     secret: test-secret-that-is-at-least-32-characters-long
     access-token-expiration-seconds: 3600
     refresh-token-expiration-seconds: 1209600
+
+openai:
+  api-key: test-api-key
+  base-url: http://localhost:9999
+  model: gpt-5.6-luna
+  connect-timeout: 100ms
+  read-timeout: 100ms
+  max-attempts: 1
+  retry-backoff: 0ms
