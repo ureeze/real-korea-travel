@@ -43,11 +43,25 @@ public class Bookmark {
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
+    /** 즐겨찾기가 삭제된 시각이며, null이면 현재 활성 상태다. */
+    @Column(name = "deleted_at")
+    private Instant deletedAt;
+
     /** 회원과 장소를 연결하고 즐겨찾기 생성 시각을 초기화한다. */
     @Builder
     public Bookmark(Member member, Place place) {
         this.member = member;
         this.place = place;
         this.createdAt = Instant.now();
+    }
+
+    /** 즐겨찾기를 실제로 삭제하지 않고 삭제 시각을 기록해 비활성화한다. */
+    public void softDelete() {
+        this.deletedAt = Instant.now();
+    }
+
+    /** Soft Delete된 즐겨찾기를 다시 활성 상태로 복구한다. */
+    public void restore() {
+        this.deletedAt = null;
     }
 }

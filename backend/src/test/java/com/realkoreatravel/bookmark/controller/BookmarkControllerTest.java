@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.realkoreatravel.bookmark.dto.BookmarkCreateRequest;
 import com.realkoreatravel.bookmark.dto.BookmarkResponse;
+import com.realkoreatravel.bookmark.dto.BookmarkToggleResponse;
 import com.realkoreatravel.bookmark.service.BookmarkService;
 import java.time.Instant;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,7 @@ import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-/** 즐겨찾기 등록 endpoint의 인증 주체·요청 본문·HTTP 응답을 검증한다. */
+/** 즐겨찾기 등록·토글 endpoint의 인증 주체·요청 본문·HTTP 응답을 검증한다. */
 @WebMvcTest(BookmarkController.class)
 @AutoConfigureMockMvc(addFilters = false)
 class BookmarkControllerTest {
@@ -77,5 +78,28 @@ class BookmarkControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("즐겨찾기 상태를 토글하면 200을 반환한다")
+    void togglesBookmark() throws Exception {
+        BookmarkToggleResponse response = BookmarkToggleResponse.builder()
+                .bookmarkId(10L)
+                .placeId(2L)
+                .bookmarked(true)
+                .build();
+        when(bookmarkService.toggle(any(Long.class), any(BookmarkCreateRequest.class))).thenReturn(response);
+
+        mockMvc.perform(post("/api/v1/bookmarks/toggle")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"placeId":2}
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.bookmarkId").value(10))
+                .andExpect(jsonPath("$.data.placeId").value(2))
+                .andExpect(jsonPath("$.data.bookmarked").value(true));
+
+        verify(bookmarkService).toggle(eq(1L), any(BookmarkCreateRequest.class));
     }
 }

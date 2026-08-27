@@ -28,6 +28,7 @@
 - [x] **장소 상세 Local Score 응답 정책** — RKT-24에서 장소 상세 응답에 `localScore`의 종합·세부 점수를 포함한다. 해당 장소에 Local Score가 없으면 `localScore: null`을 반환한다 (2026-08-25).
 - [x] **PlaceFeature 관계 정책** — PlaceFeature의 1:1 관계는 `PlaceFeature → Place` 단방향으로 유지한다. Place 비소유자 측의 `@OneToOne LAZY`가 보장되지 않는 문제를 피하고, 장소 상세 조회에서는 전용 Repository로 편의정보를 조회한다 (2026-08-25).
 - [x] **즐겨찾기 등록 정책** — RKT-28에서 인증된 회원이 장소를 즐겨찾기에 등록하는 `POST /api/v1/bookmarks`를 제공한다. `member_id`와 `place_id` 조합은 중복 등록할 수 없으며, 대상 장소가 없거나 이미 등록된 경우 각각 `404`와 `409`로 응답한다 (2026-08-26).
+- [x] **즐겨찾기 토글 정책** — RKT-29에서 인증된 회원이 장소 기준 `POST /api/v1/bookmarks/toggle`을 호출하면 즐겨찾기를 등록·해제·복구한다. 해제는 `deleted_at`을 기록하는 Soft Delete로 처리하고, 복구 시 기존 이력을 재활성화한다. 활성 즐겨찾기에만 회원·장소 UNIQUE 제약을 적용해 삭제 후 재등록을 허용한다 (2026-08-28).
 
 ## 잠정 합의 (현재까지)
 - URL 파라미터는 소문자, 응답 `code` 는 대문자 표기.

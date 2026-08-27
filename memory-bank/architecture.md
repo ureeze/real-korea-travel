@@ -40,7 +40,7 @@ com.realkoreatravel
 ## 데이터 모델 요약 (Notion ERD 기준)
 - `member`, `place`, `region`, `category`, `place_feature`, `menu`
 - `region`, `category` 는 place 의 참조(FK)이며, `place_feature`는 1:1, `menu`는 1:N 관계다.
-- (DB 설계/후속 구현) `local_score`, `bookmark`, `opening_hour`, `place_image`, `ai_review_summary`, `local_tip`, `review`
+- (DB 설계/후속 구현) `local_score`, `opening_hour`, `place_image`, `ai_review_summary`, `local_tip`, `review`; `bookmark` 등록·토글 API 구현
 - (RKT-11, 2026-08-11) 초기 스키마 13개 테이블을 Flyway V1/V2로 생성 완료. JPA 엔티티는 도메인 구현 티켓에서 작성.
 - 상세 컬럼은 Notion ERD, 실제 적용 여부는 `backend/src/main/resources/db/migration/`, AI Agent용 관계 요약은 `docs/ERD.md`를 확인한다.
 
