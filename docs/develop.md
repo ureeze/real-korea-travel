@@ -129,7 +129,7 @@ docker compose down -v   # 볼륨까지 삭제
 - 현재 구현된 인증 진입점은 `GET /auth/oauth2/google`, `GET /auth/oauth2/google/callback`, 토큰 갱신은 `POST /api/v1/auth/refresh`이다.
 - 장소 목록 응답은 `places`와 `page`, `size`, `totalElements`, `totalPages`를 사용한다. 기본 정렬은 `createdAt,desc`이다.
 - 장소 상세 응답은 장소 기본 정보, 지역·카테고리, `PlaceFeature`, `recommendedMenus`, `localScore`를 제공한다. 이미지·운영시간·AI 리뷰 요약·Local Tip은 후속 도메인 구현 범위다.
-- 키워드 검색은 `GET /api/v1/search`로 구현되었고, 즐겨찾기 등록은 인증된 회원이 `POST /api/v1/bookmarks`로 요청할 수 있다. Local Score 고도화와 AI 리뷰 요약은 후속 구현 범위다.
+- 키워드 검색은 `GET /api/v1/search`로 구현되었고, 즐겨찾기 등록·토글은 인증된 회원이 각각 `POST /api/v1/bookmarks`, `POST /api/v1/bookmarks/toggle`로 요청할 수 있다. 토글 해제는 본인 즐겨찾기의 `deleted_at`을 기록하는 Soft Delete로 처리한다. Local Score 고도화와 AI 리뷰 요약은 후속 구현 범위다.
 
 상세 작업 단계는 `memory-bank/project-brief.md`와 `AGENTS.md`를 따른다.
 > Git 브랜치/커밋은 GitHub 연동(Jira 자동화)과 함께 연동 확인됨.
