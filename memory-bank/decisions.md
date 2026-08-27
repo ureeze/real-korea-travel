@@ -27,6 +27,7 @@
 - [x] **Local Score 점수 산정 정책** — RKT-23에서 음식·가격·분위기·재방문·현지인 추천 점수에 각각 20%를 적용하고, 평균을 HALF_UP 반올림해 `totalScore`로 저장한다. 상세 결정은 ADR-0002를 참조한다 (2026-08-25).
 - [x] **장소 상세 Local Score 응답 정책** — RKT-24에서 장소 상세 응답에 `localScore`의 종합·세부 점수를 포함한다. 해당 장소에 Local Score가 없으면 `localScore: null`을 반환한다 (2026-08-25).
 - [x] **PlaceFeature 관계 정책** — PlaceFeature의 1:1 관계는 `PlaceFeature → Place` 단방향으로 유지한다. Place 비소유자 측의 `@OneToOne LAZY`가 보장되지 않는 문제를 피하고, 장소 상세 조회에서는 전용 Repository로 편의정보를 조회한다 (2026-08-25).
+- [x] **즐겨찾기 등록 정책** — RKT-28에서 인증된 회원이 장소를 즐겨찾기에 등록하는 `POST /api/v1/bookmarks`를 제공한다. `member_id`와 `place_id` 조합은 중복 등록할 수 없으며, 대상 장소가 없거나 이미 등록된 경우 각각 `404`와 `409`로 응답한다 (2026-08-26).
 
 ## 잠정 합의 (현재까지)
 - URL 파라미터는 소문자, 응답 `code` 는 대문자 표기.
