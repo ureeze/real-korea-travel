@@ -25,7 +25,7 @@
 | `local_score` | 현지인 점수 | Entity·Repository 구현, API 후속 |
 | `ai_review_summary` | AI 리뷰 요약 | DB 설계·Migration 포함, API 후속 |
 | `local_tip` | 현지인 팁 | DB 설계·Migration 포함, API 후속 |
-| `bookmark` | 회원별 즐겨찾기 | Entity·Repository·등록·토글 API 구현 |
+| `bookmark` | 회원별 즐겨찾기 | Entity·Repository·토글·목록 조회 API 구현 |
 | `review` | 외부 리뷰 수집 원본 | DB 설계·Migration 포함, 외부 API 후속 |
 
 ## 핵심 관계

@@ -4,15 +4,16 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.realkoreatravel.bookmark.dto.BookmarkCreateRequest;
-import com.realkoreatravel.bookmark.dto.BookmarkResponse;
+import com.realkoreatravel.bookmark.dto.BookmarkListResponse;
 import com.realkoreatravel.bookmark.dto.BookmarkToggleResponse;
 import com.realkoreatravel.bookmark.service.BookmarkService;
-import java.time.Instant;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,34 +48,9 @@ class BookmarkControllerTest {
     }
 
     @Test
-    @DisplayName("인증된 회원이 장소를 즐겨찾기에 등록하면 201을 반환한다")
-    void createsBookmark() throws Exception {
-        BookmarkResponse response = BookmarkResponse.builder()
-                .id(10L)
-                .memberId(1L)
-                .placeId(2L)
-                .createdAt(Instant.parse("2026-08-26T00:00:00Z"))
-                .build();
-        when(bookmarkService.create(any(Long.class), any(BookmarkCreateRequest.class))).thenReturn(response);
-
-        mockMvc.perform(post("/api/v1/bookmarks")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {"placeId":2}
-                                """))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.code").value("SUCCESS"))
-                .andExpect(jsonPath("$.data.id").value(10))
-                .andExpect(jsonPath("$.data.memberId").value(1))
-                .andExpect(jsonPath("$.data.placeId").value(2));
-
-        verify(bookmarkService).create(eq(1L), any(BookmarkCreateRequest.class));
-    }
-
-    @Test
     @DisplayName("placeId가 없으면 400을 반환한다")
     void rejectsMissingPlaceId() throws Exception {
-        mockMvc.perform(post("/api/v1/bookmarks")
+        mockMvc.perform(post("/api/v1/bookmarks/toggle")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isBadRequest());
@@ -101,5 +77,26 @@ class BookmarkControllerTest {
                 .andExpect(jsonPath("$.data.bookmarked").value(true));
 
         verify(bookmarkService).toggle(eq(1L), any(BookmarkCreateRequest.class));
+    }
+
+    @Test
+    @DisplayName("인증된 회원의 즐겨찾기 목록을 조회하면 200을 반환한다")
+    void getsBookmarks() throws Exception {
+        BookmarkListResponse response = BookmarkListResponse.builder()
+                .bookmarks(List.of())
+                .page(0)
+                .size(20)
+                .totalElements(0)
+                .totalPages(0)
+                .build();
+        when(bookmarkService.findBookmarks(1L, 0, 20)).thenReturn(response);
+
+        mockMvc.perform(get("/api/v1/bookmarks"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value("SUCCESS"))
+                .andExpect(jsonPath("$.data.bookmarks").isArray())
+                .andExpect(jsonPath("$.data.page").value(0));
+
+        verify(bookmarkService).findBookmarks(1L, 0, 20);
     }
 }
