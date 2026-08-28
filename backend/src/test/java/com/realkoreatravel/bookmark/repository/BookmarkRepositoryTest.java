@@ -20,6 +20,8 @@ import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 
 /** 즐겨찾기 JPA 매핑과 Soft Delete 후 재등록 제약을 PostgreSQL에서 검증한다. */
@@ -108,6 +110,33 @@ class BookmarkRepositoryTest {
         assertThat(reRegisteredBookmark.getId()).isNotEqualTo(bookmark.getId());
         assertThat(bookmarkRepository.findByMemberIdAndPlaceIdAndDeletedAtIsNull(member.getId(), place.getId()))
                 .contains(reRegisteredBookmark);
+    }
+
+    @Test
+    @DisplayName("회원의 활성 즐겨찾기 목록을 장소 요약 정보와 함께 조회한다")
+    void findsActiveBookmarksWithPlaceSummary() {
+        Member member = memberRepository.save(Member.builder()
+                .email("list@example.com")
+                .provider("GOOGLE")
+                .providerId("list-provider")
+                .build());
+        Place activePlace = savePlace("list-active-region", "list-active-category");
+        Place deletedPlace = savePlace("list-deleted-region", "list-deleted-category");
+
+        bookmarkRepository.save(Bookmark.builder().member(member).place(activePlace).build());
+        Bookmark deletedBookmark = Bookmark.builder().member(member).place(deletedPlace).build();
+        deletedBookmark.softDelete();
+        bookmarkRepository.saveAndFlush(deletedBookmark);
+
+        Page<Bookmark> result = bookmarkRepository.findActiveBookmarks(member.getId(), PageRequest.of(0, 20));
+
+        assertThat(result.getTotalElements()).isEqualTo(1);
+        assertThat(result.getContent()).singleElement()
+                .satisfies(bookmark -> {
+                    assertThat(bookmark.getPlace().getId()).isEqualTo(activePlace.getId());
+                    assertThat(bookmark.getPlace().getRegion().getCode()).isEqualTo("list-active-region");
+                    assertThat(bookmark.getPlace().getCategory().getCode()).isEqualTo("list-active-category");
+                });
     }
 
     /** Repository 테스트에서 사용할 지역·카테고리·장소 데이터를 생성한다. */
