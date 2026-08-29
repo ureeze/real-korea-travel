@@ -130,6 +130,8 @@ docker compose down -v   # 볼륨까지 삭제
 - 장소 목록 응답은 `places`와 `page`, `size`, `totalElements`, `totalPages`를 사용한다. 기본 정렬은 `createdAt,desc`이다.
 - 장소 상세 응답은 장소 기본 정보, 지역·카테고리, `PlaceFeature`, `recommendedMenus`, `localScore`를 제공한다. 이미지·운영시간·AI 리뷰 요약·Local Tip은 후속 도메인 구현 범위다.
 - 키워드 검색은 `GET /api/v1/search`로 구현되었고, 즐겨찾기 등록·해제·복구는 인증된 회원이 `POST /api/v1/bookmarks/toggle`로 요청할 수 있다. 토글 해제는 본인 즐겨찾기의 `deleted_at`을 기록하는 Soft Delete로 처리한다. 즐겨찾기 목록은 `GET /api/v1/bookmarks`로 페이지 조회하며 장소 요약 정보를 함께 반환한다. Local Score 고도화와 AI 리뷰 요약은 후속 구현 범위다.
+- RKT-31에서 서울·부산·제주 주요 세부 지역 10곳을 기준 데이터로 추가했다. 장소 200개는 `backend/src/main/resources/seed/places.csv`로 관리하며, 실제 적재는 `seed` 프로필로 애플리케이션을 실행할 때 수행된다. 장소별 기본 `PlaceFeature`·`LocalScore`도 함께 생성된다.
+- 장소 CSV 시드 적재는 `.\gradlew.bat bootRun --args="--spring.profiles.active=seed"`로 실행할 수 있다. Importer는 `google_place_id`가 이미 존재하는 행을 건너뛰므로 재실행 시 중복을 방지한다.
 
 상세 작업 단계는 `memory-bank/project-brief.md`와 `AGENTS.md`를 따른다.
 > Git 브랜치/커밋은 GitHub 연동(Jira 자동화)과 함께 연동 확인됨.

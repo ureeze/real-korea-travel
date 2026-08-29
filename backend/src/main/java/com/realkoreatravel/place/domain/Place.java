@@ -48,7 +48,7 @@ public class Place {
     private String name;
 
     /** 장소가 위치한 도로명 또는 지번 주소 */
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String address;
 
     /** 장소의 위도 좌표 */
@@ -72,7 +72,7 @@ public class Place {
     private String description;
 
     /** Google Places API에서 사용하는 외부 장소 식별자 */
-    @Column(name = "google_place_id", unique = true, length = 255)
+    @Column(name = "google_place_id", unique = true)
     private String googlePlaceId;
 
     /** 장소의 운영 상태와 노출 상태 */
@@ -107,7 +107,8 @@ public class Place {
             BigDecimal longitude,
             String phone,
             Short priceLevel,
-            String description
+            String description,
+            String googlePlaceId
     ) {
         this.region = region;
         this.category = category;
@@ -118,6 +119,7 @@ public class Place {
         this.phone = phone;
         this.priceLevel = priceLevel;
         this.description = description;
+        this.googlePlaceId = googlePlaceId;
         Instant now = Instant.now();
         this.createdAt = now;
         this.updatedAt = now;
