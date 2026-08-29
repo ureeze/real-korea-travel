@@ -97,6 +97,16 @@ public class Place {
     @OrderBy("sortOrder ASC, id ASC")
     private List<Menu> menus = new ArrayList<>();
 
+    /** 장소에 등록된 이미지 목록이며 대표 이미지와 표시 순서 기준으로 활용된다. */
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @OrderBy("sortOrder ASC, id ASC")
+    private List<PlaceImage> images = new ArrayList<>();
+
+    /** 장소의 요일별 운영시간 목록이다. */
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    @OrderBy("dayOfWeek ASC, openTime ASC, id ASC")
+    private List<OpeningHour> openingHours = new ArrayList<>();
+
     @Builder
     public Place(
             Region region,
@@ -141,5 +151,15 @@ public class Place {
     /** Menu 생성 시 장소의 메뉴 컬렉션에 새 메뉴를 추가한다. */
     void addMenu(Menu menu) {
         this.menus.add(menu);
+    }
+
+    /** PlaceImage 생성 시 장소의 이미지 컬렉션에 새 이미지를 추가한다. */
+    void addImage(PlaceImage image) {
+        this.images.add(image);
+    }
+
+    /** OpeningHour 생성 시 장소의 운영시간 컬렉션에 새 시간을 추가한다. */
+    void addOpeningHour(OpeningHour openingHour) {
+        this.openingHours.add(openingHour);
     }
 }

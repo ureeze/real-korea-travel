@@ -4,7 +4,10 @@ import com.realkoreatravel.localscore.domain.LocalScore;
 import com.realkoreatravel.place.domain.Menu;
 import com.realkoreatravel.place.domain.Place;
 import com.realkoreatravel.place.domain.PlaceFeature;
+import com.realkoreatravel.place.domain.PlaceImage;
+import com.realkoreatravel.place.domain.OpeningHour;
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
 import lombok.Builder;
 
@@ -18,13 +21,16 @@ public record PlaceDetailResponse(
         BigDecimal latitude,
         BigDecimal longitude,
         Integer priceLevel,
+        List<ImageResponse> images,
+        List<OpeningHourResponse> openingHours,
         PlaceFeatureResponse feature,
         List<MenuResponse> recommendedMenus,
         LocalScoreResponse localScore
 ) {
 
     /** 장소 Entity와 별도로 조회한 편의정보·Local Score를 상세 응답으로 변환한다. */
-    public static PlaceDetailResponse from(Place place, PlaceFeature feature, LocalScore localScore) {
+    public static PlaceDetailResponse from(Place place, List<PlaceImage> images, List<OpeningHour> openingHours,
+                                           PlaceFeature feature, LocalScore localScore) {
         return PlaceDetailResponse.builder()
                 .id(place.getId())
                 .name(place.getName())
@@ -34,10 +40,39 @@ public record PlaceDetailResponse(
                 .latitude(place.getLatitude())
                 .longitude(place.getLongitude())
                 .priceLevel(place.getPriceLevel() == null ? null : place.getPriceLevel().intValue())
+                .images(images.stream().map(ImageResponse::from).toList())
+                .openingHours(openingHours.stream().map(OpeningHourResponse::from).toList())
                 .feature(feature == null ? null : PlaceFeatureResponse.from(feature))
                 .recommendedMenus(place.getMenus().stream().map(MenuResponse::from).toList())
                 .localScore(localScore == null ? null : LocalScoreResponse.from(localScore))
                 .build();
+    }
+
+    @Builder
+    public record ImageResponse(String imageUrl, boolean main, int sortOrder) {
+
+        /** 장소 이미지 Entity를 상세 응답용 이미지 정보로 변환한다. */
+        private static ImageResponse from(PlaceImage image) {
+            return ImageResponse.builder()
+                    .imageUrl(image.getImageUrl())
+                    .main(image.isMain())
+                    .sortOrder(image.getSortOrder())
+                    .build();
+        }
+    }
+
+    @Builder
+    public record OpeningHourResponse(short dayOfWeek, LocalTime openTime, LocalTime closeTime, boolean closed) {
+
+        /** 운영시간 Entity를 상세 응답용 운영시간 정보로 변환한다. */
+        private static OpeningHourResponse from(OpeningHour openingHour) {
+            return OpeningHourResponse.builder()
+                    .dayOfWeek(openingHour.getDayOfWeek())
+                    .openTime(openingHour.getOpenTime())
+                    .closeTime(openingHour.getCloseTime())
+                    .closed(openingHour.isClosed())
+                    .build();
+        }
     }
 
     @Builder

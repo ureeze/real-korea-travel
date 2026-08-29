@@ -109,8 +109,10 @@ docker compose down -v   # 볼륨까지 삭제
 
 - **엔드포인트**: `GET /api/v1/places/{placeId}`
 - **조회 대상**: `ACTIVE` 상태이고 soft delete되지 않은 장소만 반환한다.
-- **응답 범위**: 장소 기본 정보, 지역·카테고리, 외국인 편의정보(`PlaceFeature`), 메뉴 목록, Local Score를 포함한다.
+- **응답 범위**: 장소 기본 정보, 지역·카테고리, 이미지, 요일별 운영시간, 외국인 편의정보(`PlaceFeature`), 메뉴 목록, Local Score를 포함한다.
 - **메뉴 정렬**: `sort_order` 오름차순을 기본으로 하며, 같은 순서에서는 메뉴 ID 오름차순으로 정렬한다.
+- **이미지 정렬**: `sort_order` 오름차순을 기본으로 하며, 같은 순서에서는 이미지 ID 오름차순으로 정렬한다.
+- **운영시간 정렬**: 요일, 시작 시각, 운영시간 ID 오름차순으로 정렬한다.
 - **예외**: 장소가 존재하지 않거나 비활성·삭제 상태이면 `404 Not Found`를 반환한다.
 - **Local Score**: 종합 점수와 음식·가격·분위기·재방문·현지인 추천 세부 점수를 포함하며, 점수가 없으면 `null`을 반환한다.
 
@@ -130,7 +132,7 @@ docker compose down -v   # 볼륨까지 삭제
 - 장소 목록 응답은 `places`와 `page`, `size`, `totalElements`, `totalPages`를 사용한다. 기본 정렬은 `createdAt,desc`이다.
 - 장소 상세 응답은 장소 기본 정보, 지역·카테고리, `PlaceFeature`, `recommendedMenus`, `localScore`를 제공한다. 이미지·운영시간·AI 리뷰 요약·Local Tip은 후속 도메인 구현 범위다.
 - 키워드 검색은 `GET /api/v1/search`로 구현되었고, 즐겨찾기 등록·해제·복구는 인증된 회원이 `POST /api/v1/bookmarks/toggle`로 요청할 수 있다. 토글 해제는 본인 즐겨찾기의 `deleted_at`을 기록하는 Soft Delete로 처리한다. 즐겨찾기 목록은 `GET /api/v1/bookmarks`로 페이지 조회하며 장소 요약 정보를 함께 반환한다. Local Score 고도화와 AI 리뷰 요약은 후속 구현 범위다.
-- RKT-31에서 서울·부산·제주 주요 세부 지역 10곳을 기준 데이터로 추가했다. 장소 200개는 `backend/src/main/resources/seed/places.csv`로 관리하며, 실제 적재는 `seed` 프로필로 애플리케이션을 실행할 때 수행된다. 장소별 기본 `PlaceFeature`·`LocalScore`도 함께 생성된다.
+- RKT-31에서 서울·부산·제주 주요 세부 지역 10곳을 기준 데이터로 추가했다. 장소 200개는 `backend/src/main/resources/seed/places.csv`로 관리하며, 실제 적재는 `seed` 프로필로 애플리케이션을 실행할 때 수행된다. 장소별 기본 `PlaceFeature`·`LocalScore`·이미지·대표 메뉴·요일별 운영시간도 함께 생성된다.
 - 장소 CSV 시드 적재는 `.\gradlew.bat bootRun --args="--spring.profiles.active=seed"`로 실행할 수 있다. Importer는 `google_place_id`가 이미 존재하는 행을 건너뛰므로 재실행 시 중복을 방지한다.
 
 상세 작업 단계는 `memory-bank/project-brief.md`와 `AGENTS.md`를 따른다.
