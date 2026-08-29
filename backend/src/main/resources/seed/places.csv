@@ -1,0 +1,201 @@
+region_code,category_code,name,address,latitude,longitude,price_level,description,google_place_id
+seongsu,restaurant,성수 로컬 맛집 01,서울특별시 성동구 성수동 1,37.5441000,127.0551000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-1
+seongsu,cafe,성수 로컬 카페 02,서울특별시 성동구 성수동 2,37.5442000,127.0552000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-2
+seongsu,dessert,성수 로컬 디저트 03,서울특별시 성동구 성수동 3,37.5443000,127.0553000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-3
+seongsu,bar,성수 로컬 술집 04,서울특별시 성동구 성수동 4,37.5444000,127.0554000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-4
+seongsu,restaurant,성수 로컬 맛집 05,서울특별시 성동구 성수동 5,37.5445000,127.0555000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-5
+seongsu,cafe,성수 로컬 카페 06,서울특별시 성동구 성수동 6,37.5446000,127.0556000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-6
+seongsu,dessert,성수 로컬 디저트 07,서울특별시 성동구 성수동 7,37.5447000,127.0557000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-7
+seongsu,bar,성수 로컬 술집 08,서울특별시 성동구 성수동 8,37.5448000,127.0558000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-8
+seongsu,restaurant,성수 로컬 맛집 09,서울특별시 성동구 성수동 9,37.5449000,127.0559000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-9
+seongsu,cafe,성수 로컬 카페 10,서울특별시 성동구 성수동 10,37.5450000,127.0560000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-10
+seongsu,dessert,성수 로컬 디저트 11,서울특별시 성동구 성수동 11,37.5451000,127.0561000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-11
+seongsu,bar,성수 로컬 술집 12,서울특별시 성동구 성수동 12,37.5452000,127.0562000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-12
+seongsu,restaurant,성수 로컬 맛집 13,서울특별시 성동구 성수동 13,37.5453000,127.0563000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-13
+seongsu,cafe,성수 로컬 카페 14,서울특별시 성동구 성수동 14,37.5454000,127.0564000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-14
+seongsu,dessert,성수 로컬 디저트 15,서울특별시 성동구 성수동 15,37.5455000,127.0565000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-15
+seongsu,bar,성수 로컬 술집 16,서울특별시 성동구 성수동 16,37.5456000,127.0566000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-16
+seongsu,restaurant,성수 로컬 맛집 17,서울특별시 성동구 성수동 17,37.5457000,127.0567000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-17
+seongsu,cafe,성수 로컬 카페 18,서울특별시 성동구 성수동 18,37.5458000,127.0568000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-18
+seongsu,dessert,성수 로컬 디저트 19,서울특별시 성동구 성수동 19,37.5459000,127.0569000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-19
+seongsu,bar,성수 로컬 술집 20,서울특별시 성동구 성수동 20,37.5460000,127.0570000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seongsu-20
+hongdae,restaurant,홍대 로컬 맛집 01,서울특별시 마포구 홍대 1,37.5571000,126.9241000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-1
+hongdae,cafe,홍대 로컬 카페 02,서울특별시 마포구 홍대 2,37.5572000,126.9242000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-2
+hongdae,dessert,홍대 로컬 디저트 03,서울특별시 마포구 홍대 3,37.5573000,126.9243000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-3
+hongdae,bar,홍대 로컬 술집 04,서울특별시 마포구 홍대 4,37.5574000,126.9244000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-4
+hongdae,restaurant,홍대 로컬 맛집 05,서울특별시 마포구 홍대 5,37.5575000,126.9245000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-5
+hongdae,cafe,홍대 로컬 카페 06,서울특별시 마포구 홍대 6,37.5576000,126.9246000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-6
+hongdae,dessert,홍대 로컬 디저트 07,서울특별시 마포구 홍대 7,37.5577000,126.9247000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-7
+hongdae,bar,홍대 로컬 술집 08,서울특별시 마포구 홍대 8,37.5578000,126.9248000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-8
+hongdae,restaurant,홍대 로컬 맛집 09,서울특별시 마포구 홍대 9,37.5579000,126.9249000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-9
+hongdae,cafe,홍대 로컬 카페 10,서울특별시 마포구 홍대 10,37.5580000,126.9250000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-10
+hongdae,dessert,홍대 로컬 디저트 11,서울특별시 마포구 홍대 11,37.5581000,126.9251000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-11
+hongdae,bar,홍대 로컬 술집 12,서울특별시 마포구 홍대 12,37.5582000,126.9252000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-12
+hongdae,restaurant,홍대 로컬 맛집 13,서울특별시 마포구 홍대 13,37.5583000,126.9253000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-13
+hongdae,cafe,홍대 로컬 카페 14,서울특별시 마포구 홍대 14,37.5584000,126.9254000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-14
+hongdae,dessert,홍대 로컬 디저트 15,서울특별시 마포구 홍대 15,37.5585000,126.9255000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-15
+hongdae,bar,홍대 로컬 술집 16,서울특별시 마포구 홍대 16,37.5586000,126.9256000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-16
+hongdae,restaurant,홍대 로컬 맛집 17,서울특별시 마포구 홍대 17,37.5587000,126.9257000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-17
+hongdae,cafe,홍대 로컬 카페 18,서울특별시 마포구 홍대 18,37.5588000,126.9258000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-18
+hongdae,dessert,홍대 로컬 디저트 19,서울특별시 마포구 홍대 19,37.5589000,126.9259000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-19
+hongdae,bar,홍대 로컬 술집 20,서울특별시 마포구 홍대 20,37.5590000,126.9260000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-hongdae-20
+gangnam,restaurant,강남 로컬 맛집 01,서울특별시 강남구 강남 1,37.4981000,127.0271000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-1
+gangnam,cafe,강남 로컬 카페 02,서울특별시 강남구 강남 2,37.4982000,127.0272000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-2
+gangnam,dessert,강남 로컬 디저트 03,서울특별시 강남구 강남 3,37.4983000,127.0273000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-3
+gangnam,bar,강남 로컬 술집 04,서울특별시 강남구 강남 4,37.4984000,127.0274000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-4
+gangnam,restaurant,강남 로컬 맛집 05,서울특별시 강남구 강남 5,37.4985000,127.0275000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-5
+gangnam,cafe,강남 로컬 카페 06,서울특별시 강남구 강남 6,37.4986000,127.0276000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-6
+gangnam,dessert,강남 로컬 디저트 07,서울특별시 강남구 강남 7,37.4987000,127.0277000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-7
+gangnam,bar,강남 로컬 술집 08,서울특별시 강남구 강남 8,37.4988000,127.0278000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-8
+gangnam,restaurant,강남 로컬 맛집 09,서울특별시 강남구 강남 9,37.4989000,127.0279000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-9
+gangnam,cafe,강남 로컬 카페 10,서울특별시 강남구 강남 10,37.4990000,127.0280000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-10
+gangnam,dessert,강남 로컬 디저트 11,서울특별시 강남구 강남 11,37.4991000,127.0281000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-11
+gangnam,bar,강남 로컬 술집 12,서울특별시 강남구 강남 12,37.4992000,127.0282000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-12
+gangnam,restaurant,강남 로컬 맛집 13,서울특별시 강남구 강남 13,37.4993000,127.0283000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-13
+gangnam,cafe,강남 로컬 카페 14,서울특별시 강남구 강남 14,37.4994000,127.0284000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-14
+gangnam,dessert,강남 로컬 디저트 15,서울특별시 강남구 강남 15,37.4995000,127.0285000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-15
+gangnam,bar,강남 로컬 술집 16,서울특별시 강남구 강남 16,37.4996000,127.0286000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-16
+gangnam,restaurant,강남 로컬 맛집 17,서울특별시 강남구 강남 17,37.4997000,127.0287000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-17
+gangnam,cafe,강남 로컬 카페 18,서울특별시 강남구 강남 18,37.4998000,127.0288000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-18
+gangnam,dessert,강남 로컬 디저트 19,서울특별시 강남구 강남 19,37.4999000,127.0289000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-19
+gangnam,bar,강남 로컬 술집 20,서울특별시 강남구 강남 20,37.5000000,127.0290000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gangnam-20
+myeongdong,restaurant,명동 로컬 맛집 01,서울특별시 중구 명동 1,37.5631000,126.9861000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-1
+myeongdong,cafe,명동 로컬 카페 02,서울특별시 중구 명동 2,37.5632000,126.9862000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-2
+myeongdong,dessert,명동 로컬 디저트 03,서울특별시 중구 명동 3,37.5633000,126.9863000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-3
+myeongdong,bar,명동 로컬 술집 04,서울특별시 중구 명동 4,37.5634000,126.9864000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-4
+myeongdong,restaurant,명동 로컬 맛집 05,서울특별시 중구 명동 5,37.5635000,126.9865000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-5
+myeongdong,cafe,명동 로컬 카페 06,서울특별시 중구 명동 6,37.5636000,126.9866000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-6
+myeongdong,dessert,명동 로컬 디저트 07,서울특별시 중구 명동 7,37.5637000,126.9867000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-7
+myeongdong,bar,명동 로컬 술집 08,서울특별시 중구 명동 8,37.5638000,126.9868000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-8
+myeongdong,restaurant,명동 로컬 맛집 09,서울특별시 중구 명동 9,37.5639000,126.9869000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-9
+myeongdong,cafe,명동 로컬 카페 10,서울특별시 중구 명동 10,37.5640000,126.9870000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-10
+myeongdong,dessert,명동 로컬 디저트 11,서울특별시 중구 명동 11,37.5641000,126.9871000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-11
+myeongdong,bar,명동 로컬 술집 12,서울특별시 중구 명동 12,37.5642000,126.9872000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-12
+myeongdong,restaurant,명동 로컬 맛집 13,서울특별시 중구 명동 13,37.5643000,126.9873000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-13
+myeongdong,cafe,명동 로컬 카페 14,서울특별시 중구 명동 14,37.5644000,126.9874000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-14
+myeongdong,dessert,명동 로컬 디저트 15,서울특별시 중구 명동 15,37.5645000,126.9875000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-15
+myeongdong,bar,명동 로컬 술집 16,서울특별시 중구 명동 16,37.5646000,126.9876000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-16
+myeongdong,restaurant,명동 로컬 맛집 17,서울특별시 중구 명동 17,37.5647000,126.9877000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-17
+myeongdong,cafe,명동 로컬 카페 18,서울특별시 중구 명동 18,37.5648000,126.9878000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-18
+myeongdong,dessert,명동 로컬 디저트 19,서울특별시 중구 명동 19,37.5649000,126.9879000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-19
+myeongdong,bar,명동 로컬 술집 20,서울특별시 중구 명동 20,37.5650000,126.9880000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-myeongdong-20
+haeundae,restaurant,해운대 로컬 맛집 01,부산광역시 해운대구 해운대 1,35.1631000,129.1631000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-1
+haeundae,cafe,해운대 로컬 카페 02,부산광역시 해운대구 해운대 2,35.1632000,129.1632000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-2
+haeundae,dessert,해운대 로컬 디저트 03,부산광역시 해운대구 해운대 3,35.1633000,129.1633000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-3
+haeundae,bar,해운대 로컬 술집 04,부산광역시 해운대구 해운대 4,35.1634000,129.1634000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-4
+haeundae,restaurant,해운대 로컬 맛집 05,부산광역시 해운대구 해운대 5,35.1635000,129.1635000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-5
+haeundae,cafe,해운대 로컬 카페 06,부산광역시 해운대구 해운대 6,35.1636000,129.1636000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-6
+haeundae,dessert,해운대 로컬 디저트 07,부산광역시 해운대구 해운대 7,35.1637000,129.1637000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-7
+haeundae,bar,해운대 로컬 술집 08,부산광역시 해운대구 해운대 8,35.1638000,129.1638000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-8
+haeundae,restaurant,해운대 로컬 맛집 09,부산광역시 해운대구 해운대 9,35.1639000,129.1639000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-9
+haeundae,cafe,해운대 로컬 카페 10,부산광역시 해운대구 해운대 10,35.1640000,129.1640000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-10
+haeundae,dessert,해운대 로컬 디저트 11,부산광역시 해운대구 해운대 11,35.1641000,129.1641000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-11
+haeundae,bar,해운대 로컬 술집 12,부산광역시 해운대구 해운대 12,35.1642000,129.1642000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-12
+haeundae,restaurant,해운대 로컬 맛집 13,부산광역시 해운대구 해운대 13,35.1643000,129.1643000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-13
+haeundae,cafe,해운대 로컬 카페 14,부산광역시 해운대구 해운대 14,35.1644000,129.1644000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-14
+haeundae,dessert,해운대 로컬 디저트 15,부산광역시 해운대구 해운대 15,35.1645000,129.1645000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-15
+haeundae,bar,해운대 로컬 술집 16,부산광역시 해운대구 해운대 16,35.1646000,129.1646000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-16
+haeundae,restaurant,해운대 로컬 맛집 17,부산광역시 해운대구 해운대 17,35.1647000,129.1647000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-17
+haeundae,cafe,해운대 로컬 카페 18,부산광역시 해운대구 해운대 18,35.1648000,129.1648000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-18
+haeundae,dessert,해운대 로컬 디저트 19,부산광역시 해운대구 해운대 19,35.1649000,129.1649000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-19
+haeundae,bar,해운대 로컬 술집 20,부산광역시 해운대구 해운대 20,35.1650000,129.1650000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-haeundae-20
+gwangalli,restaurant,광안리 로컬 맛집 01,부산광역시 수영구 광안리 1,35.1531000,129.1181000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-1
+gwangalli,cafe,광안리 로컬 카페 02,부산광역시 수영구 광안리 2,35.1532000,129.1182000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-2
+gwangalli,dessert,광안리 로컬 디저트 03,부산광역시 수영구 광안리 3,35.1533000,129.1183000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-3
+gwangalli,bar,광안리 로컬 술집 04,부산광역시 수영구 광안리 4,35.1534000,129.1184000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-4
+gwangalli,restaurant,광안리 로컬 맛집 05,부산광역시 수영구 광안리 5,35.1535000,129.1185000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-5
+gwangalli,cafe,광안리 로컬 카페 06,부산광역시 수영구 광안리 6,35.1536000,129.1186000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-6
+gwangalli,dessert,광안리 로컬 디저트 07,부산광역시 수영구 광안리 7,35.1537000,129.1187000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-7
+gwangalli,bar,광안리 로컬 술집 08,부산광역시 수영구 광안리 8,35.1538000,129.1188000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-8
+gwangalli,restaurant,광안리 로컬 맛집 09,부산광역시 수영구 광안리 9,35.1539000,129.1189000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-9
+gwangalli,cafe,광안리 로컬 카페 10,부산광역시 수영구 광안리 10,35.1540000,129.1190000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-10
+gwangalli,dessert,광안리 로컬 디저트 11,부산광역시 수영구 광안리 11,35.1541000,129.1191000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-11
+gwangalli,bar,광안리 로컬 술집 12,부산광역시 수영구 광안리 12,35.1542000,129.1192000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-12
+gwangalli,restaurant,광안리 로컬 맛집 13,부산광역시 수영구 광안리 13,35.1543000,129.1193000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-13
+gwangalli,cafe,광안리 로컬 카페 14,부산광역시 수영구 광안리 14,35.1544000,129.1194000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-14
+gwangalli,dessert,광안리 로컬 디저트 15,부산광역시 수영구 광안리 15,35.1545000,129.1195000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-15
+gwangalli,bar,광안리 로컬 술집 16,부산광역시 수영구 광안리 16,35.1546000,129.1196000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-16
+gwangalli,restaurant,광안리 로컬 맛집 17,부산광역시 수영구 광안리 17,35.1547000,129.1197000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-17
+gwangalli,cafe,광안리 로컬 카페 18,부산광역시 수영구 광안리 18,35.1548000,129.1198000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-18
+gwangalli,dessert,광안리 로컬 디저트 19,부산광역시 수영구 광안리 19,35.1549000,129.1199000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-19
+gwangalli,bar,광안리 로컬 술집 20,부산광역시 수영구 광안리 20,35.1550000,129.1200000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-gwangalli-20
+seomyeon,restaurant,서면 로컬 맛집 01,부산광역시 부산진구 서면 1,35.1571000,129.0591000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-1
+seomyeon,cafe,서면 로컬 카페 02,부산광역시 부산진구 서면 2,35.1572000,129.0592000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-2
+seomyeon,dessert,서면 로컬 디저트 03,부산광역시 부산진구 서면 3,35.1573000,129.0593000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-3
+seomyeon,bar,서면 로컬 술집 04,부산광역시 부산진구 서면 4,35.1574000,129.0594000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-4
+seomyeon,restaurant,서면 로컬 맛집 05,부산광역시 부산진구 서면 5,35.1575000,129.0595000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-5
+seomyeon,cafe,서면 로컬 카페 06,부산광역시 부산진구 서면 6,35.1576000,129.0596000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-6
+seomyeon,dessert,서면 로컬 디저트 07,부산광역시 부산진구 서면 7,35.1577000,129.0597000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-7
+seomyeon,bar,서면 로컬 술집 08,부산광역시 부산진구 서면 8,35.1578000,129.0598000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-8
+seomyeon,restaurant,서면 로컬 맛집 09,부산광역시 부산진구 서면 9,35.1579000,129.0599000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-9
+seomyeon,cafe,서면 로컬 카페 10,부산광역시 부산진구 서면 10,35.1580000,129.0600000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-10
+seomyeon,dessert,서면 로컬 디저트 11,부산광역시 부산진구 서면 11,35.1581000,129.0601000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-11
+seomyeon,bar,서면 로컬 술집 12,부산광역시 부산진구 서면 12,35.1582000,129.0602000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-12
+seomyeon,restaurant,서면 로컬 맛집 13,부산광역시 부산진구 서면 13,35.1583000,129.0603000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-13
+seomyeon,cafe,서면 로컬 카페 14,부산광역시 부산진구 서면 14,35.1584000,129.0604000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-14
+seomyeon,dessert,서면 로컬 디저트 15,부산광역시 부산진구 서면 15,35.1585000,129.0605000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-15
+seomyeon,bar,서면 로컬 술집 16,부산광역시 부산진구 서면 16,35.1586000,129.0606000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-16
+seomyeon,restaurant,서면 로컬 맛집 17,부산광역시 부산진구 서면 17,35.1587000,129.0607000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-17
+seomyeon,cafe,서면 로컬 카페 18,부산광역시 부산진구 서면 18,35.1588000,129.0608000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-18
+seomyeon,dessert,서면 로컬 디저트 19,부산광역시 부산진구 서면 19,35.1589000,129.0609000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-19
+seomyeon,bar,서면 로컬 술집 20,부산광역시 부산진구 서면 20,35.1590000,129.0610000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seomyeon-20
+jeju-city,restaurant,제주시 로컬 맛집 01,제주특별자치도 제주시 1,33.4991000,126.5311000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-1
+jeju-city,cafe,제주시 로컬 카페 02,제주특별자치도 제주시 2,33.4992000,126.5312000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-2
+jeju-city,dessert,제주시 로컬 디저트 03,제주특별자치도 제주시 3,33.4993000,126.5313000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-3
+jeju-city,bar,제주시 로컬 술집 04,제주특별자치도 제주시 4,33.4994000,126.5314000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-4
+jeju-city,restaurant,제주시 로컬 맛집 05,제주특별자치도 제주시 5,33.4995000,126.5315000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-5
+jeju-city,cafe,제주시 로컬 카페 06,제주특별자치도 제주시 6,33.4996000,126.5316000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-6
+jeju-city,dessert,제주시 로컬 디저트 07,제주특별자치도 제주시 7,33.4997000,126.5317000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-7
+jeju-city,bar,제주시 로컬 술집 08,제주특별자치도 제주시 8,33.4998000,126.5318000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-8
+jeju-city,restaurant,제주시 로컬 맛집 09,제주특별자치도 제주시 9,33.4999000,126.5319000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-9
+jeju-city,cafe,제주시 로컬 카페 10,제주특별자치도 제주시 10,33.5000000,126.5320000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-10
+jeju-city,dessert,제주시 로컬 디저트 11,제주특별자치도 제주시 11,33.5001000,126.5321000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-11
+jeju-city,bar,제주시 로컬 술집 12,제주특별자치도 제주시 12,33.5002000,126.5322000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-12
+jeju-city,restaurant,제주시 로컬 맛집 13,제주특별자치도 제주시 13,33.5003000,126.5323000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-13
+jeju-city,cafe,제주시 로컬 카페 14,제주특별자치도 제주시 14,33.5004000,126.5324000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-14
+jeju-city,dessert,제주시 로컬 디저트 15,제주특별자치도 제주시 15,33.5005000,126.5325000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-15
+jeju-city,bar,제주시 로컬 술집 16,제주특별자치도 제주시 16,33.5006000,126.5326000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-16
+jeju-city,restaurant,제주시 로컬 맛집 17,제주특별자치도 제주시 17,33.5007000,126.5327000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-17
+jeju-city,cafe,제주시 로컬 카페 18,제주특별자치도 제주시 18,33.5008000,126.5328000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-18
+jeju-city,dessert,제주시 로컬 디저트 19,제주특별자치도 제주시 19,33.5009000,126.5329000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-19
+jeju-city,bar,제주시 로컬 술집 20,제주특별자치도 제주시 20,33.5010000,126.5330000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-jeju-city-20
+seogwipo,restaurant,서귀포 로컬 맛집 01,제주특별자치도 서귀포시 1,33.2531000,126.5611000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-1
+seogwipo,cafe,서귀포 로컬 카페 02,제주특별자치도 서귀포시 2,33.2532000,126.5612000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-2
+seogwipo,dessert,서귀포 로컬 디저트 03,제주특별자치도 서귀포시 3,33.2533000,126.5613000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-3
+seogwipo,bar,서귀포 로컬 술집 04,제주특별자치도 서귀포시 4,33.2534000,126.5614000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-4
+seogwipo,restaurant,서귀포 로컬 맛집 05,제주특별자치도 서귀포시 5,33.2535000,126.5615000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-5
+seogwipo,cafe,서귀포 로컬 카페 06,제주특별자치도 서귀포시 6,33.2536000,126.5616000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-6
+seogwipo,dessert,서귀포 로컬 디저트 07,제주특별자치도 서귀포시 7,33.2537000,126.5617000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-7
+seogwipo,bar,서귀포 로컬 술집 08,제주특별자치도 서귀포시 8,33.2538000,126.5618000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-8
+seogwipo,restaurant,서귀포 로컬 맛집 09,제주특별자치도 서귀포시 9,33.2539000,126.5619000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-9
+seogwipo,cafe,서귀포 로컬 카페 10,제주특별자치도 서귀포시 10,33.2540000,126.5620000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-10
+seogwipo,dessert,서귀포 로컬 디저트 11,제주특별자치도 서귀포시 11,33.2541000,126.5621000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-11
+seogwipo,bar,서귀포 로컬 술집 12,제주특별자치도 서귀포시 12,33.2542000,126.5622000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-12
+seogwipo,restaurant,서귀포 로컬 맛집 13,제주특별자치도 서귀포시 13,33.2543000,126.5623000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-13
+seogwipo,cafe,서귀포 로컬 카페 14,제주특별자치도 서귀포시 14,33.2544000,126.5624000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-14
+seogwipo,dessert,서귀포 로컬 디저트 15,제주특별자치도 서귀포시 15,33.2545000,126.5625000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-15
+seogwipo,bar,서귀포 로컬 술집 16,제주특별자치도 서귀포시 16,33.2546000,126.5626000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-16
+seogwipo,restaurant,서귀포 로컬 맛집 17,제주특별자치도 서귀포시 17,33.2547000,126.5627000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-17
+seogwipo,cafe,서귀포 로컬 카페 18,제주특별자치도 서귀포시 18,33.2548000,126.5628000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-18
+seogwipo,dessert,서귀포 로컬 디저트 19,제주특별자치도 서귀포시 19,33.2549000,126.5629000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-19
+seogwipo,bar,서귀포 로컬 술집 20,제주특별자치도 서귀포시 20,33.2550000,126.5630000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-seogwipo-20
+aewol,restaurant,애월 로컬 맛집 01,제주특별자치도 제주시 애월읍 1,33.4631000,126.3281000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-1
+aewol,cafe,애월 로컬 카페 02,제주특별자치도 제주시 애월읍 2,33.4632000,126.3282000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-2
+aewol,dessert,애월 로컬 디저트 03,제주특별자치도 제주시 애월읍 3,33.4633000,126.3283000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-3
+aewol,bar,애월 로컬 술집 04,제주특별자치도 제주시 애월읍 4,33.4634000,126.3284000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-4
+aewol,restaurant,애월 로컬 맛집 05,제주특별자치도 제주시 애월읍 5,33.4635000,126.3285000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-5
+aewol,cafe,애월 로컬 카페 06,제주특별자치도 제주시 애월읍 6,33.4636000,126.3286000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-6
+aewol,dessert,애월 로컬 디저트 07,제주특별자치도 제주시 애월읍 7,33.4637000,126.3287000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-7
+aewol,bar,애월 로컬 술집 08,제주특별자치도 제주시 애월읍 8,33.4638000,126.3288000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-8
+aewol,restaurant,애월 로컬 맛집 09,제주특별자치도 제주시 애월읍 9,33.4639000,126.3289000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-9
+aewol,cafe,애월 로컬 카페 10,제주특별자치도 제주시 애월읍 10,33.4640000,126.3290000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-10
+aewol,dessert,애월 로컬 디저트 11,제주특별자치도 제주시 애월읍 11,33.4641000,126.3291000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-11
+aewol,bar,애월 로컬 술집 12,제주특별자치도 제주시 애월읍 12,33.4642000,126.3292000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-12
+aewol,restaurant,애월 로컬 맛집 13,제주특별자치도 제주시 애월읍 13,33.4643000,126.3293000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-13
+aewol,cafe,애월 로컬 카페 14,제주특별자치도 제주시 애월읍 14,33.4644000,126.3294000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-14
+aewol,dessert,애월 로컬 디저트 15,제주특별자치도 제주시 애월읍 15,33.4645000,126.3295000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-15
+aewol,bar,애월 로컬 술집 16,제주특별자치도 제주시 애월읍 16,33.4646000,126.3296000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-16
+aewol,restaurant,애월 로컬 맛집 17,제주특별자치도 제주시 애월읍 17,33.4647000,126.3297000,1,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-17
+aewol,cafe,애월 로컬 카페 18,제주특별자치도 제주시 애월읍 18,33.4648000,126.3298000,2,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-18
+aewol,dessert,애월 로컬 디저트 19,제주특별자치도 제주시 애월읍 19,33.4649000,126.3299000,3,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-19
+aewol,bar,애월 로컬 술집 20,제주특별자치도 제주시 애월읍 20,33.4650000,126.3300000,4,RKT-31 MVP 시드 장소 데이터,seed-rkt-31-aewol-20

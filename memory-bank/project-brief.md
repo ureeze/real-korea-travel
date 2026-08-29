@@ -48,7 +48,9 @@
 - 현재 구현 인증: `GET /auth/oauth2/google`, `GET /auth/oauth2/google/callback`, `POST /api/v1/auth/refresh`
 - 현재 구현 장소: `GET /api/v1/places`, `GET /api/v1/places/{placeId}`
 - 현재 구현 검색: `GET /api/v1/search`
-- 후속 구현 범위: 즐겨찾기, Local Score 고도화, AI 리뷰 요약
+- 현재 구현 즐겨찾기: `POST /api/v1/bookmarks/toggle`, `GET /api/v1/bookmarks`
+- 현재 시드 데이터: 서울·부산·제주 주요 세부 지역 10곳, 장소 200개 및 기본 Local Score·PlaceFeature
+- 후속 구현 범위: Local Score 고도화, AI 리뷰 요약, 이미지·운영시간·Local Tip
 
 ## 관계
 - 프로젝트 루트: `C:\Users\alche\OneDrive\문서\Default Project\Real_Korea_Travel`

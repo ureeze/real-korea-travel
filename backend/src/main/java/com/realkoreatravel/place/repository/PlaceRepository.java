@@ -11,6 +11,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
+    /** 외부 장소 ID로 이미 적재된 장소인지 확인한다. */
+    Optional<Place> findByGooglePlaceId(String googlePlaceId);
+
     @Query(
             value = """
                     select p from Place p
