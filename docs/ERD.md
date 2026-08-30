@@ -20,8 +20,8 @@
 | `place` | 장소 기본 정보 | Entity·Repository·목록·상세·검색·시드 데이터 구현 |
 | `place_feature` | 외국인 편의 정보 | 구현 |
 | `menu` | 장소 메뉴 | 구현 |
-| `opening_hour` | 요일별 운영시간 | DB 설계·Migration 포함, API 후속 |
-| `place_image` | 장소 이미지 | DB 설계·Migration 포함, API 후속 |
+| `opening_hour` | 요일별 운영시간 | Entity·Repository·시드·장소 상세 응답 구현 |
+| `place_image` | 장소 이미지 | Entity·Repository·시드·장소 상세 응답 구현 |
 | `local_score` | 현지인 점수 | Entity·Repository·시드 기본값 구현, API 후속 |
 | `ai_review_summary` | AI 리뷰 요약 | DB 설계·Migration 포함, API 후속 |
 | `local_tip` | 현지인 팁 | DB 설계·Migration 포함, API 후속 |

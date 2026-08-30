@@ -49,7 +49,7 @@
 - 현재 구현 장소: `GET /api/v1/places`, `GET /api/v1/places/{placeId}`
 - 현재 구현 검색: `GET /api/v1/search`
 - 현재 구현 즐겨찾기: `POST /api/v1/bookmarks/toggle`, `GET /api/v1/bookmarks`
-- 현재 시드 데이터: 서울·부산·제주 주요 세부 지역 10곳, 장소 200개 및 기본 Local Score·PlaceFeature
+- 현재 시드 데이터: 서울·부산·제주 주요 세부 지역 10곳, 장소 200개 및 기본 Local Score·PlaceFeature·이미지·메뉴·요일별 운영시간
 - 후속 구현 범위: Local Score 고도화, AI 리뷰 요약, 이미지·운영시간·Local Tip
 
 ## 관계

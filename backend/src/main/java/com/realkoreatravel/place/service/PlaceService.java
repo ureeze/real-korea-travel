@@ -10,6 +10,8 @@ import com.realkoreatravel.place.dto.PlaceDetailResponse;
 import com.realkoreatravel.place.dto.PlaceListResponse;
 import com.realkoreatravel.place.dto.PlaceSearchCondition;
 import com.realkoreatravel.place.repository.PlaceFeatureRepository;
+import com.realkoreatravel.place.repository.PlaceImageRepository;
+import com.realkoreatravel.place.repository.OpeningHourRepository;
 import com.realkoreatravel.place.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -32,6 +34,8 @@ public class PlaceService {
 
     private final PlaceRepository placeRepository;
     private final PlaceFeatureRepository placeFeatureRepository;
+    private final PlaceImageRepository placeImageRepository;
+    private final OpeningHourRepository openingHourRepository;
     private final LocalScoreRepository localScoreRepository;
 
     /** 필터·페이징 조건으로 활성 장소를 조회해 목록 응답으로 변환한다. */
@@ -56,8 +60,10 @@ public class PlaceService {
                         "장소를 찾을 수 없습니다."
         ));
         PlaceFeature feature = placeFeatureRepository.findByPlaceId(placeId).orElse(null);
+        var images = placeImageRepository.findByPlaceIdOrderBySortOrderAscIdAsc(placeId);
+        var openingHours = openingHourRepository.findByPlaceIdOrderByDayOfWeekAscOpenTimeAscIdAsc(placeId);
         LocalScore localScore = localScoreRepository.findByPlaceId(placeId).orElse(null);
-        return PlaceDetailResponse.from(place, feature, localScore);
+        return PlaceDetailResponse.from(place, images, openingHours, feature, localScore);
     }
 
     /** 요청의 페이징·정렬 파라미터를 안전한 Spring Pageable로 변환한다. */

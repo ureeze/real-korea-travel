@@ -18,6 +18,8 @@ import com.realkoreatravel.place.dto.PlaceDetailResponse;
 import com.realkoreatravel.place.dto.PlaceListResponse;
 import com.realkoreatravel.place.dto.PlaceSearchCondition;
 import com.realkoreatravel.place.repository.PlaceFeatureRepository;
+import com.realkoreatravel.place.repository.PlaceImageRepository;
+import com.realkoreatravel.place.repository.OpeningHourRepository;
 import com.realkoreatravel.place.repository.PlaceRepository;
 import java.math.BigDecimal;
 import java.util.List;
@@ -39,6 +41,12 @@ class PlaceServiceTest {
 
     @Mock
     private PlaceFeatureRepository placeFeatureRepository;
+
+    @Mock
+    private PlaceImageRepository placeImageRepository;
+
+    @Mock
+    private OpeningHourRepository openingHourRepository;
 
     @Mock
     private LocalScoreRepository localScoreRepository;
@@ -134,6 +142,8 @@ class PlaceServiceTest {
         when(placeRepository.findActivePlaceDetail(eq(42L), eq(PlaceStatus.ACTIVE)))
                 .thenReturn(Optional.of(place));
         when(placeFeatureRepository.findByPlaceId(42L)).thenReturn(Optional.of(feature));
+        when(placeImageRepository.findByPlaceIdOrderBySortOrderAscIdAsc(42L)).thenReturn(List.of());
+        when(openingHourRepository.findByPlaceIdOrderByDayOfWeekAscOpenTimeAscIdAsc(42L)).thenReturn(List.of());
         LocalScore localScore = LocalScore.builder()
                 .place(place)
                 .totalScore(86)
@@ -156,6 +166,8 @@ class PlaceServiceTest {
                 .containsExactly("시그니처 라떼");
         verify(placeRepository).findActivePlaceDetail(42L, PlaceStatus.ACTIVE);
         verify(placeFeatureRepository).findByPlaceId(42L);
+        verify(placeImageRepository).findByPlaceIdOrderBySortOrderAscIdAsc(42L);
+        verify(openingHourRepository).findByPlaceIdOrderByDayOfWeekAscOpenTimeAscIdAsc(42L);
         verify(localScoreRepository).findByPlaceId(42L);
     }
 
